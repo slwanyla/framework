@@ -1740,8 +1740,13 @@
 #54 C:\\xampp\\htdocs\\mbjek\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\xampp\\\\htdocs...')
 #55 {main}
 "} 
+<<<<<<< HEAD
 [2025-05-07 13:29:03] local.ERROR: Failed to authenticate on SMTP server with username "your-email@gmail.com" using the following authenticators: "LOGIN", "PLAIN", "XOAUTH2". Authenticator "LOGIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e150eae99sm93721545ad.19 - gsmtp".". Authenticator "PLAIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+=======
+[2025-05-07 13:29:03] local.ERROR: Failed to authenticate on SMTP server with username "your-email@gmail.com" using the following authenticators: "LOGIN", "PLAIN", "XOAUTH2". Authenticator "LOGIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e150eae99sm93721545ad.19 - gsmtp".". Authenticator "PLAIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+>>>>>>> d8753f091372c4afddb30879f14ae729077b6e25
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e150eae99sm93721545ad.19 - gsmtp".". Authenticator "XOAUTH2" returned "Expected response code "235" but got code "334", with message "334 eyJzdGF0dXMiOiI0MDAiLCJzY2hlbWVzIjoiQmVhcmVyIiwic2NvcGUiOiJodHRwczovL21haWwuZ29vZ2xlLmNvbS8ifQ==".". {"userId":2,"exception":"[object] (Symfony\\Component\\Mailer\\Exception\\TransportException(code: 334): Failed to authenticate on SMTP server with username \"your-email@gmail.com\" using the following authenticators: \"LOGIN\", \"PLAIN\", \"XOAUTH2\". Authenticator \"LOGIN\" returned \"Expected response code \"235\" but got code \"535\", with message \"535-5.7.8 Username and Password not accepted. For more information, go to
 
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e150eae99sm93721545ad.19 - gsmtp\".\". Authenticator \"PLAIN\" returned \"Expected response code \"235\" but got code \"535\", with message \"535-5.7.8 Username and Password not accepted. For more information, go to
@@ -1815,8 +1820,13 @@
 #64 C:\\xampp\\htdocs\\mbjek\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\xampp\\\\htdocs...')
 #65 {main}
 "} 
+<<<<<<< HEAD
 [2025-05-07 13:37:23] local.ERROR: Failed to authenticate on SMTP server with username "mbjekapp@gmail.com" using the following authenticators: "LOGIN", "PLAIN", "XOAUTH2". Authenticator "LOGIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e1522fa16sm94069075ad.239 - gsmtp".". Authenticator "PLAIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+=======
+[2025-05-07 13:37:23] local.ERROR: Failed to authenticate on SMTP server with username "mbjekapp@gmail.com" using the following authenticators: "LOGIN", "PLAIN", "XOAUTH2". Authenticator "LOGIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e1522fa16sm94069075ad.239 - gsmtp".". Authenticator "PLAIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+>>>>>>> d8753f091372c4afddb30879f14ae729077b6e25
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e1522fa16sm94069075ad.239 - gsmtp".". Authenticator "XOAUTH2" returned "Expected response code "235" but got code "334", with message "334 eyJzdGF0dXMiOiI0MDAiLCJzY2hlbWVzIjoiQmVhcmVyIiwic2NvcGUiOiJodHRwczovL21haWwuZ29vZ2xlLmNvbS8ifQ==".". {"userId":2,"exception":"[object] (Symfony\\Component\\Mailer\\Exception\\TransportException(code: 334): Failed to authenticate on SMTP server with username \"mbjekapp@gmail.com\" using the following authenticators: \"LOGIN\", \"PLAIN\", \"XOAUTH2\". Authenticator \"LOGIN\" returned \"Expected response code \"235\" but got code \"535\", with message \"535-5.7.8 Username and Password not accepted. For more information, go to
 
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e1522fa16sm94069075ad.239 - gsmtp\".\". Authenticator \"PLAIN\" returned \"Expected response code \"235\" but got code \"535\", with message \"535-5.7.8 Username and Password not accepted. For more information, go to
@@ -1890,8 +1900,13 @@
 #64 C:\\xampp\\htdocs\\mbjek\\vendor\\laravel\\framework\\src\\Illuminate\\Foundation\\resources\\server.php(23): require_once('C:\\\\xampp\\\\htdocs...')
 #65 {main}
 "} 
+<<<<<<< HEAD
 [2025-05-07 13:41:30] local.ERROR: Failed to authenticate on SMTP server with username "mbjekapp@gmail.com" using the following authenticators: "LOGIN", "PLAIN", "XOAUTH2". Authenticator "LOGIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e150eadfcsm93748175ad.32 - gsmtp".". Authenticator "PLAIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+=======
+[2025-05-07 13:41:30] local.ERROR: Failed to authenticate on SMTP server with username "mbjekapp@gmail.com" using the following authenticators: "LOGIN", "PLAIN", "XOAUTH2". Authenticator "LOGIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e150eadfcsm93748175ad.32 - gsmtp".". Authenticator "PLAIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+>>>>>>> d8753f091372c4afddb30879f14ae729077b6e25
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e150eadfcsm93748175ad.32 - gsmtp".". Authenticator "XOAUTH2" returned "Expected response code "235" but got code "334", with message "334 eyJzdGF0dXMiOiI0MDAiLCJzY2hlbWVzIjoiQmVhcmVyIiwic2NvcGUiOiJodHRwczovL21haWwuZ29vZ2xlLmNvbS8ifQ==".". {"userId":2,"exception":"[object] (Symfony\\Component\\Mailer\\Exception\\TransportException(code: 334): Failed to authenticate on SMTP server with username \"mbjekapp@gmail.com\" using the following authenticators: \"LOGIN\", \"PLAIN\", \"XOAUTH2\". Authenticator \"LOGIN\" returned \"Expected response code \"235\" but got code \"535\", with message \"535-5.7.8 Username and Password not accepted. For more information, go to
 
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d9443c01a7336-22e150eadfcsm93748175ad.32 - gsmtp\".\". Authenticator \"PLAIN\" returned \"Expected response code \"235\" but got code \"535\", with message \"535-5.7.8 Username and Password not accepted. For more information, go to
@@ -3760,8 +3775,13 @@
 #36 C:\\Users\\LENOVO\\OneDrive\\文档\\mbjek\\artisan(16): Illuminate\\Foundation\\Application->handleCommand(Object(Symfony\\Component\\Console\\Input\\ArgvInput))
 #37 {main}
 "} 
+<<<<<<< HEAD
 [2025-05-09 00:46:14] local.ERROR: Failed to authenticate on SMTP server with username "mbjekapp@gmail.com" using the following authenticators: "LOGIN", "PLAIN", "XOAUTH2". Authenticator "LOGIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-74237a3c600sm655088b3a.134 - gsmtp".". Authenticator "PLAIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+=======
+[2025-05-09 00:46:14] local.ERROR: Failed to authenticate on SMTP server with username "mbjekapp@gmail.com" using the following authenticators: "LOGIN", "PLAIN", "XOAUTH2". Authenticator "LOGIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-74237a3c600sm655088b3a.134 - gsmtp".". Authenticator "PLAIN" returned "Expected response code "235" but got code "535", with message "535-5.7.8 Username and Password not accepted. For more information, go to
+>>>>>>> d8753f091372c4afddb30879f14ae729077b6e25
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-74237a3c600sm655088b3a.134 - gsmtp".". Authenticator "XOAUTH2" returned "Expected response code "235" but got code "334", with message "334 eyJzdGF0dXMiOiI0MDAiLCJzY2hlbWVzIjoiQmVhcmVyIiwic2NvcGUiOiJodHRwczovL21haWwuZ29vZ2xlLmNvbS8ifQ==".". {"exception":"[object] (Symfony\\Component\\Mailer\\Exception\\TransportException(code: 334): Failed to authenticate on SMTP server with username \"mbjekapp@gmail.com\" using the following authenticators: \"LOGIN\", \"PLAIN\", \"XOAUTH2\". Authenticator \"LOGIN\" returned \"Expected response code \"235\" but got code \"535\", with message \"535-5.7.8 Username and Password not accepted. For more information, go to
 
 535 5.7.8  https://support.google.com/mail/?p=BadCredentials d2e1a72fcca58-74237a3c600sm655088b3a.134 - gsmtp\".\". Authenticator \"PLAIN\" returned \"Expected response code \"235\" but got code \"535\", with message \"535-5.7.8 Username and Password not accepted. For more information, go to
