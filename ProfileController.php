@@ -3,86 +3,110 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
+use App\Models\Driver;
+use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
+
 class ProfileController extends Controller
 {
-    public function update(Request $request)
-    {
-        $user = Auth::user();
-
-        $request->validate([
-            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'phone' => 'nullable|string|max:20',
-
-            // Validasi tambahan jika user adalah driver
-            'vehicle_type' => 'nullable|string|max:255',
-            'vehicle_color' => 'nullable|string|max:255',
-            'vehicle_plate' => 'nullable|string|max:20',
+    public function profile(Request $request)
+{
+    $user = $request->user()->load('driver');
+    
+    return response()->json([
+        'id' => $user->id,
+        'username' => $user->username,
+        'nama' => $user->nama,
+        'email' => $user->email,
+        'phone' => $user->phone,
+        'role' => $user->role,
+        'is_driver' => $user->role === 'driver', // ✅ Tambahkan ini
+        'photo' => $user->photo ? asset('storage/' . $user->photo) : null,
+        // ⬇️ Tambahkan ini untuk akses data kendaraan
+        'no_plat' => $user->driver->no_plat ?? null,
+        'tipe_kendaraan' => $user->driver->tipe_kendaraan ?? null,
+        'warna_kendaraan' => $user->driver->warna_kendaraan ?? null,
+        'merek' =>$user->driver->merek ?? null,
+        'status' => $user->driver->status ?? false, // kirim boolean langsung
         ]);
+        
+}
 
-        /**
- * @var \App\Models\User $user
- */
+public function updateProfile(Request $request)
+{
+    $user = $request->user();
 
-        // Update data user
-        $user->username = $request->username;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->save();
+    $request->validate([
+        'email' => 'email:rfc,dns|unique:users,email,' . $user->id,
+    ]);
 
-        // Jika user adalah driver, update data kendaraan
-        if ($user->role === 'driver' && $user->driver) {
-            $user->driver->vehicle_type = $request->vehicle_type;
-            $user->driver->vehicle_color = $request->vehicle_color;
-            $user->driver->vehicle_plate = $request->vehicle_plate;
-            $user->driver->save();
-        }
+    // Ubah ke huruf kapital sebelum update
+    $updateUserData = [
+        'nama' => strtoupper($request->nama),
+        'email' => $request->email,
+        'phone' => $request->phone,
+    ];
 
-        return back()->with('success', 'Profil berhasil diperbarui.');
+    $user->update(array_filter($updateUserData)); // Filter null biar aman
+
+    // Kalau driver, update juga data drivernya
+    if ($user->role === 'driver' && $user->driver) {
+        $updateDriverData = [
+            'tipe_kendaraan' => strtoupper($request->tipe_kendaraan),
+            'warna_kendaraan' => strtoupper($request->warna_kendaraan),
+            'no_plat' => strtoupper($request->no_plat),
+            'merek' => strtoupper($request->merek),
+        ];
+
+        $user->driver->update(array_filter($updateDriverData));
     }
 
-    public function updateProfilePicture(Request $request)
+    return response()->json(['message' => 'Profil berhasil diperbarui']);
+}
+
+
+    
+     // upload foto profil
+     
+    public function uploadPhoto(Request $request)
     {
-        $request->validate([
-            'profile_picture' => 'required|image|mimes:jpg,jpeg,png,gif|max:2048',
+        $validator = Validator::make($request->all(), [
+            'photo' => 'image|mimes:jpg,jpeg,png|max:2048'
         ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'success' => false,
+                'errors' => $validator->errors(),
+                'message' => 'File foto tidak valid'
+            ], 422);
+        }
 
         $user = Auth::user();
 
         // Hapus foto lama jika ada
-        if ($user->profile_picture) {
-            Storage::disk('public')->delete($user->profile_picture);
+        if ($user->photo && Storage::exists('public/' . $user->photo)) {
+            Storage::delete('public/' . $user->photo);
         }
 
-        // Simpan file baru
+        // Upload foto baru
+        $photoPath = $request->file('photo')->store('profile', 'public');
 
-        $path = $request->file('profile_picture')->store('profile_pictures', 'public');
-        
-        /**
- * @var \App\Models\User $user
- */
-        $user->profile_picture = $path;
-        $user->save();
+        // Update database
+        $user->update([
+            'photo' => $photoPath
+        ]);
 
-        return back()->with('success', 'Foto profil diperbarui!');
+        return response()->json([
+            'success' => true,
+            'data' => [
+                'photo' => asset('storage/' . $photoPath)
+            ],
+            'message' => 'Foto profil berhasil diupload'
+        ]);
     }
 
-    public function deleteProfilePicture()
-    {
-        /**
- * @var \App\Models\User $user
- */
-        $user = Auth::user();
-
-        if ($user->profile_picture) {
-            Storage::disk('public')->delete($user->profile_picture);
-            $user->profile_picture = null;
-            $user->save();
-        }
-
-        return back()->with('success', 'Foto profil dihapus.');
-    }
 }
