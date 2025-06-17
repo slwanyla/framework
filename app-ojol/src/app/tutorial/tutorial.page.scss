@@ -1,0 +1,54 @@
+.custom-header {
+  --background: #192559;
+  --color: white;
+}
+
+ion-content {
+  --background: #f5f0e6; 
+}
+
+ion-card {
+  background-color: #f5f0e6;
+  border-radius: 0;      
+  box-shadow: none;      
+  margin: 0;          
+  height: 100%;          
+  width: 100%;         
+  --ion-background-color: transparent; 
+}
+
+ion-card-content {
+  padding: 16px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+ion-item {
+  --background: transparent;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+ion-item ion-label h2 {
+  font-size: 16px;
+  color: #192559;
+  margin-right: 15px;
+  margin-top: -14px;
+}
+
+ion-list ion-item ion-label {
+  font-size: 1rem;
+  line-height: 1.5;
+  color: #444;
+}
+
+ion-icon {
+  font-size: 24px;
+  margin-right: 16px;
+  margin-top: -10px;
+  vertical-align: middle;
+}
+
+ion-list ion-item:not(:last-child) {
+  margin-bottom: 8px;
+}

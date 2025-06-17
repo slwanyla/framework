@@ -1,0 +1,63 @@
+<ion-content class="profil-content">
+  <div class="header-custom">
+    <div class="header-top">
+      <div class="back-section">
+        <ion-icon name="arrow-back" class="back-icon" (click)="goBack()"></ion-icon>
+        <span class="header-title">Profilku</span>
+      </div>
+      <ion-icon name="pencil-outline" class="edit-icon" (click)="goToEditProfile()"></ion-icon>
+    </div>
+
+   
+    <div class="profile-pic">
+      <img *ngIf="photoUrl; else defaultIcon" [src]="photoUrl" class="avatar-img" alt="Foto Profil" />
+      <ng-template #defaultIcon>
+        <ion-icon name="person-circle" class="default-avatar"></ion-icon>
+      </ng-template>
+    </div>
+    
+   
+  </div>
+
+  <div class="profile-detail">
+    <h2 class="nama-driver">{{profile.nama}}</h2>
+    <p class="status-driver">Driver – <span [ngClass]="{
+      'status-aktif': profile.status === true,
+      'status-nonaktif': profile.status === false
+    }">
+      {{ profile.status ? 'On' : 'Off' }}
+    </span></p>
+    <p class="rating">
+      <ion-icon name="star" class="star-icon"></ion-icon>
+      4.9 (4.9/120 penilaian)
+    </p>
+    <hr class="section-divider" />
+  </div>
+
+  <div class="form-box">
+    <div class="form-row">
+      <label>Nomor HP :</label>
+      <input type="text" [value]="profile.phone" readonly />
+    </div>
+    <div class="form-row">
+      <label>Email :</label>
+      <input type="text"  [value]="profile.email" readonly />
+    </div>
+    <div class="form-row">
+      <label>Plat Nomor :</label>
+      <input type="text" [value]="profile.no_plat" readonly />
+    </div>
+    <div class="form-row">
+      <label>Nama Kendaraan :</label>
+      <input type="text" [value]="profile.merek" readonly/>
+    </div>
+    <div class="form-row">
+      <label>Nama Kendaraan :</label>
+      <input type="text" [value]="profile.warna_kendaraan" readonly/>
+    </div>
+    <div class="form-row">
+      <label>Jenis Kendaraan :</label>
+      <input type="text" [value]="profile.tipe_kendaraan" readonly/>
+    </div>
+  </div>
+</ion-content>

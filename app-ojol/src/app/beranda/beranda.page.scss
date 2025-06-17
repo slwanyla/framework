@@ -1,0 +1,133 @@
+.home-container {
+    --background: #f5f0e6;
+    font-family: 'Poppins', sans-serif;
+}
+  
+.header-card {
+    background: #192559;
+    color: #fff;
+    padding: 20px 16px 12px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+  
+.profile-info {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+ }
+
+ .left-info {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; // ubah ke center kalau ingin teks rata tengah dengan logo
+    gap: 6px; // jarak antara logo dan teks
+  }
+  
+.logo {
+    width: 135px;
+    height: 85px;
+    transform: scale(1.8); // memperbesar tampilan
+    transform-origin: center; // tetap di tengah
+    margin-left: 20px;
+    margin-top: -20px;
+}
+  
+.greeting p {
+    margin: 0;
+    font-size: 18px;
+}
+  
+.greeting h2 {
+    margin: 4px 0 0;
+    font-size: 18px;
+    font-weight: 600;
+}
+  
+.notif-btn ion-icon {
+    font-size: 55px; // Menyesuaikan ukuran ikon
+    color: #fff;
+    margin-top: -20px;
+}
+  
+.more-btn {
+    --padding-start: 0;
+    --padding-end: 0;
+    --icon-size: 20px;
+    color: #000;
+}
+  
+.service-icons {
+    display: flex;
+    justify-content: space-around;
+    margin: 12px 0;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 22px;
+  font-weight: 600;
+  margin-top: 24px;
+  color: #192559;
+}
+
+.service-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    background: white;
+    padding: 12px;
+    border-radius: 12px;
+    width: 80px;
+    margin-top: 25px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+  
+.service-item ion-icon {
+    font-size: 28px;
+    color: #000;
+}
+
+.avatar-img {
+    width: 50px;         // ⬆️ lebih besar
+    height: 50px;
+    border-radius: 50%;  // tetap bulet
+    object-fit: cover;
+  }
+  
+  
+.avatar-icon {
+    font-size: 50px; // ikutin ukuran img
+    color: #666;
+}
+  
+
+.notif-btn {
+    cursor: pointer;
+    transform: translateY(-40px); // Geser ke atas
+  }
+  
+  
+ion-footer {
+    background: #192559;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    margin-top: 485px;
+}
+  
+ion-tab-bar {
+    --background: #192559;
+    --color: #fff;
+    --color-selected: #fff;
+}
+
+ion-searchbar {
+    width: 400px;
+    height: 60px;
+    border-radius: 50px;
+    padding: 8px;
+    font-size: 14px;
+    --border-radius: 50px;
+    --background: #fff;
+}

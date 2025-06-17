@@ -1,0 +1,41 @@
+<ion-content class="map-container">
+
+  <!-- Peta -->
+  <div class="map-wrapper">
+    <div id="map-tujuan-akhir"></div>
+    <ion-button fill="clear" class="navigate-btn">
+      <ion-icon name="navigate-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- Info Card -->
+  <div class="info-card">
+    <ion-icon name="chatbubble-ellipses-outline" class="chat-icon" (click)="bukaChat()"></ion-icon>
+    <div class="profile-section">
+      <div class="avatar-placeholder"></div>
+      <div class="user-info">
+        <h3 class="name">Rifha Reinda Warich</h3>
+      </div>
+    </div>
+
+    <div class="university-row">
+      <ion-icon name="location-sharp"></ion-icon>
+      <p class="university">Universitas Buana Perjuangan Karawang</p>
+    </div>
+
+
+    <div class="divider-line"></div>
+
+    <div class="status-info">
+      <p class="status-text">Sedang antar pelanggan</p>
+      <p class="status-time">35 Menit (..km)</p>
+    </div>
+
+    <div class="spacer"></div>
+    <ion-button expand="block" class="finish-button" (click)="selesaikanTujuan()"> Selesaikan Tujuan </ion-button>
+    <ion-button expand="block" fill="outline" class="review-button">Lihat Ulang Tujuan</ion-button>
+
+    <p class="footer-note">Jangan lupa konfirmasi penyelesaian layanan setelah sampai tujuan.</p>
+  </div>
+
+</ion-content>

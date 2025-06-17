@@ -1,0 +1,62 @@
+.verifycode-container {
+    --background: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 500px;
+  
+    .verify-box {
+      text-align: center;
+      padding-top: 95px;
+  
+      .icon-verify {
+        font-size: 50px;
+        color: #1a237e;
+        margin-bottom: 10px;
+      }
+  
+      h2 {
+        font-weight: bold;
+        font-size: 24px;
+        color: #1a237e;
+        margin-bottom: 10px;
+      }
+  
+      p {
+        font-size: 14px;
+        color: #000;
+        margin-bottom: 25px;
+      }
+  
+      .code-inputs {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-bottom: 25px;
+  
+        input {
+          width: 45px;
+          height: 45px;
+          text-align: center;
+          font-size: 20px;
+          border: 1.5px solid #1a237e;
+          border-radius: 10px;
+          outline: none;
+        }
+      }
+  
+      .verify-btn {
+        --background: #1a237e;
+        --border-radius: 10px;
+        font-weight: bold;
+        width: auto;
+        padding: 0 10px; // padding horizontal agar tombol proporsional
+        height: 45px;
+        max-width: 200px; // batas maksimum
+        margin: 0 auto; // agar tombol tetap di tengah
+        display: block;
+      }
+      
+    }
+  }
+  

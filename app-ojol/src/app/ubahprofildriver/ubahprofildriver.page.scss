@@ -1,0 +1,268 @@
+.custom-header {
+  --background: transparent;
+  position: relative;
+  z-index: 10;
+  box-shadow: none !important; 
+  border-bottom: 1px solid #fff;
+
+  ion-toolbar {
+    --background: #192559;
+    --min-height: 40px;
+    border-bottom-left-radius: 30px;
+    border-bottom-right-radius: 30px;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    display: flex;
+    align-items: flex-end;
+
+    ion-title {
+      color: #fff;
+      font-size: 20px;
+      font-weight: bold;
+      margin-top: -24px;
+    }
+
+    .btn-simpan {
+      color: #fff;
+      font-weight: bold;
+      border: 1px solid white;
+      border-radius: 12px;
+      padding: 2px 8px;
+      font-size: 10px;
+      height: 5px;       
+      min-width: 50px;     
+      margin-right: 18px;
+      margin-top: 20px;
+    }
+  }
+
+  ion-buttons {
+    align-items: flex-end;
+    color: #fff;
+    margin-top: -27px;
+  }
+}
+
+.custom-content {
+  --background: #ffffff;
+  padding-top: 16px;
+
+  .profile-container {
+    padding: 16px;
+
+    h2 {
+      font-size: 18px;
+      font-weight: bold;
+      margin-top: -2px;
+      margin-top: 5px;
+      margin-left: 10px;
+    }
+
+  .profile-picture {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 16px;
+    margin: 12px 0;
+    margin-left: 15px;
+
+    .photo-caption-wrapper {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .circle-photo {
+      width: 70px;
+      height: 70px;
+      background-color: #dcdcdc;
+      border-radius: 50%;
+      overflow: hidden; // ⬅️ penting biar img gak keluar dari lingkaran
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; // ⬅️ bikin gambar nggak gepeng
+      border-radius: 50%; // ⬅️ bikin gambar ikut bulat juga
+    }
+
+    .caption {
+      font-size: 14px;
+      color: #000;
+      max-width: 250px;
+      text-align: left;
+      margin-left: 25px;
+    }
+
+    .ganti-btn {
+      font-size: 14px;
+      color: #000;
+      margin-left: 5px;
+      margin-top: -10px;
+      text-transform: none;
+    }
+}
+
+
+.form-list {
+  ion-item {
+    --min-height: 0px; /* mengatur tinggi item */
+    --inner-padding-start: 0;
+    --inner-padding-end: 0;
+    --padding-top: 2px;
+    --padding-bottom: 2px;
+    margin-bottom: 16px;
+    margin-left: 5px;
+
+  ion-label {
+    font-size: 18px; /* ukuran label */
+    font-weight: 550; /* ketebalan */
+    color: #000; /* warna (opsional) */
+    margin-bottom: 10px; /* jarak dari input */
+    margin-top: -10px;
+  }
+
+  ion-input {
+    border: 1.6px solid #192559;
+    font-size: 15px; /* ukuran teks di dalam input */
+    padding: 6px 10px; /* ruang dalam */
+    border-radius: 14px;
+    height: 10px; /* tinggi input */
+    width: 300px;
+    --padding-start: 20px; /* Geser teks ke kanan */
+    text-align: left;  
+  }
+}
+
+.jenis-label {
+  margin-top: 12px;
+  margin-left: 20px;
+  font-size: 15px;
+  font-weight: 550;
+}
+
+.vehicle-selection {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 8px;
+
+  .vehicle-btn {
+    width: 60px;
+    height: 60px;
+    border-radius: 12px;
+    background-color: #192559 !important; /* warna default */
+    color: #000 !important; /* warna teks & icon default */
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    --background: transparent;
+
+    ion-icon {
+      font-size: 28px;
+      color: #f7e7e7 !important; /* paksa warna icon default */
+    }
+
+    &.selected {
+      background-color: #192559 !important;
+      color: #fff !important;
+
+      ion-icon {
+        color: #fff !important;
+      }
+    }
+  }
+}
+
+}
+}
+}
+.modal-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: transparent;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  z-index: 9999;
+  padding: 0;
+}
+
+.modal-card-footer {
+  background: #ffffff;
+  width: 100vw;
+  max-width: 100vw;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  padding: 24px 20px 32px 20px;
+  box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.15);
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+
+  h2 {
+    font-size: 20px;
+    font-weight: 550;
+    margin-bottom: 20px;
+    margin-top: -10px;
+    text-align: left;
+    color: #000;
+  }
+
+.pilihan-foto {
+  display: flex;
+  align-items: center;
+  justify-content: space-between; /* kiri dan kanan */
+  background: #fff;
+  border-radius: 12px;
+  padding: 14px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  color: #000;
+  cursor: pointer;
+  margin-top: 10px;
+}
+
+.left-content {
+  display: flex;
+  align-items: center;
+}
+
+.galeri-icon {
+  font-size: 22px;
+  color: #000;
+  margin-right: 12px; /* Jarak icon ke teks */
+}
+
+.text-galeri {
+  margin: 0;
+}
+  
+.arrow-icon {
+  font-size: 20px;
+  color: #999;
+}
+
+}
+
+.close-btn {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  font-size: 20px;
+  cursor: pointer;
+  font-weight: 700;
+  color: #666;
+  user-select: none;
+  transition: color 0.3s ease;
+  margin-right: 10px;
+
+  &:hover {
+    color: #192559;
+  }
+}

@@ -1,0 +1,33 @@
+<ion-header class="custom-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/menudriver" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Riwayat Layanan</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="service-card" *ngFor="let item of layanan">
+    <div class="service-header">
+      <div class="service-name">
+        <strong>{{ item.nama }}</strong>
+      </div>
+      <div class="service-time">
+        {{ item.waktu }}
+      </div>
+    </div>
+    <div class="service-location">
+      <ion-icon name="person-sharp"></ion-icon>
+      <span>{{ item.dari }}</span>
+    </div>
+    <div class="service-location">
+      <ion-icon name="location-sharp"></ion-icon>
+      <span>{{ item.ke }}</span>
+    </div>
+    <div class="service-footer">
+      <span class="status">Selesai</span>
+      <span class="harga">Rp{{ item.harga }}</span>
+    </div>
+  </div>
+</ion-content>

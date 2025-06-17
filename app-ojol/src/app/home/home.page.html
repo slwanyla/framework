@@ -1,0 +1,75 @@
+<ion-content [fullscreen]="true" [scrollY]="false" class="no-scroll-content">
+  <div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true">
+
+    <!-- SIGN UP -->
+    <div class="signup">
+      <form (ngSubmit)="signUp()">
+        <label for="chk">Sign up</label>
+        <input type="text" name="username" placeholder="Username" required [(ngModel)]="username">
+        <input type="text" name="nama" placeholder="Nama" required [(ngModel)]="nama">
+        <input type="email" name="email" placeholder="Email" required [(ngModel)]="email">
+        <input type="text" name="phone" placeholder="No Handphone" required [(ngModel)]="phone">
+       
+        <div class="form-group">
+          <select name="role" required [(ngModel)]="role" (change)="onRoleChange()">
+            <option value="" disabled selected>Daftar Sebagai</option>
+            <option value="customer">Pengguna</option>
+            <option value="driver">Driver</option>
+          </select>
+        </div>
+        
+        <div *ngIf="role === 'driver'" class="driver-details">
+          <div class="form-group">
+            <select name="tipe_Kendaraan" required [(ngModel)]="tipeKendaraan">
+              <option value="" disabled selected>Pilih Tipe Kendaraan</option>
+              <option value="motor">Motor</option>
+              <option value="mobil">Mobil</option>
+            </select>
+          </div>
+              
+          <input type="text" name="merek" placeholder="Merek Kendaraan" [(ngModel)]="merek" required>
+          <input type="text" name="warna_kendaraan" placeholder="Warna Kendaraan" [(ngModel)]="warnaKendaraan" required>
+          <input type="text" name="no_plat" placeholder="No. Plat Kendaraan" [(ngModel)]="noPlat" required>
+        </div>
+        <div class="password-container">
+        <input [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Password" [(ngModel)]="password" name="password" required>
+        <ion-icon [name]="isPasswordVisible ? 'eye-off' : 'eye'" class="password-toggle-icon signup-icon" (click)="togglePasswordVisibility()"></ion-icon>
+        </div>
+        <button type="submit" [disabled]="loadingRegister">
+          <ng-container *ngIf="!loadingRegister">Sign up</ng-container>
+          <ion-spinner name="dots" *ngIf="loadingRegister"></ion-spinner>
+        </button>
+
+
+      </form>
+    </div>
+
+    <!-- LOGIN -->
+    <div class="login">
+      <form (ngSubmit)="login()">
+        <label for="chk">Login</label>
+        <input type="text" name="loginInput" placeholder="Username/Email/No.HP" [(ngModel)]="loginInput" required>
+        <div class="password-container">
+        <input [type]="isPasswordVisible ? 'text' : 'password'" placeholder="Password" [(ngModel)]="password" name="password" required>
+        <ion-icon [name]="isPasswordVisible ? 'eye-off' : 'eye'" class="password-toggle-icon login-icon" (click)="togglePasswordVisibility()"></ion-icon>
+        </div>
+        <div class="forgot-password">
+          <a (click)="toggleForgotPassword()">Forgot Password?</a>
+
+          <div *ngIf="showForgotPasswordForm" class="forgot-password-form">
+            <input type="text" placeholder="Email" [(ngModel)]="forgotEmail" name="forgotEmail">
+            <button type="button" (click)="sendForgotPasswordEmail()">Kirim Email</button>
+          </div>
+
+        </div>
+        <button type="submit" [disabled]="loadingLogin">
+          <ng-container *ngIf="!loadingLogin">Login</ng-container>
+          <ion-spinner name="dots" *ngIf="loadingLogin"></ion-spinner>
+        </button>
+
+      </form>
+    </div>
+
+  </div>
+</ion-content>

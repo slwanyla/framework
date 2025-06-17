@@ -1,0 +1,88 @@
+<ion-header class="custom-header">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/profildriver"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ubah Profil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="btn-simpan" fill="clear" (click)="simpanPerubahan()">Simpan</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="custom-content">
+  <div class="profile-container">
+    <h2>Foto Profile</h2>
+
+  <div class="profile-picture">
+    <div class="photo-caption-wrapper">
+      <div class="circle-photo">
+        <img *ngIf="fotoProfil" [src]="fotoProfil" class="preview-img" />
+      </div>
+      <p class="caption">Pasang foto yang kece! Semua orang bakal lihat.</p>
+    </div>
+    <ion-button size="small" fill="clear" class="ganti-btn" (click)="bukaModal()">Ganti</ion-button>
+  </div>
+    <ion-list lines="none" class="form-list">
+    <ion-item lines="none">
+      <ion-label position="stacked">Nama</ion-label>
+      <ion-input [(ngModel)]="form.nama"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input [(ngModel)]="form.email"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Plat Nomor</ion-label>
+      <ion-input [(ngModel)]="form.plat"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Nama Kendaraan</ion-label>
+      <ion-input [(ngModel)]="form.merek"></ion-input>
+    </ion-item>
+
+    <ion-item lines="none">
+      <ion-label position="stacked">Email</ion-label>
+      <ion-input [(ngModel)]="form.warna"></ion-input>
+    </ion-item>
+
+    <ion-label class="jenis-label">Jenis Kendaraan</ion-label>
+    <div class="vehicle-selection">
+      <ion-button
+        class="vehicle-btn"
+        [class.selected]="form.kendaraan === 'motor'"
+        (click)="form.kendaraan = 'motor'"
+      >
+        <ion-icon name="bicycle-outline"></ion-icon>
+      </ion-button>
+    
+      <ion-button
+        class="vehicle-btn"
+        [class.selected]="form.kendaraan === 'mobil'"
+        (click)="form.kendaraan = 'mobil'"
+      >
+        <ion-icon name="car-outline"></ion-icon>
+      </ion-button>
+    </div>    
+    </ion-list>
+  </div>
+
+  <!-- Modal Ganti Foto -->
+  <div class="modal-footer" *ngIf="showModal">
+    <div class="modal-card-footer">
+      <button class="close-btn" (click)="tutupModal()">✕</button>
+      <h2>Ganti foto profil</h2>
+
+      <div class="pilihan-foto" (click)="pilihFoto()">
+        <div class="left-content">
+          <ion-icon name="image-outline" class="galeri-icon"></ion-icon>
+          <span class="text-galeri">Pilih dari galeri</span>
+        </div>
+        <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+      </div>
+    </div>
+  </div>
+</ion-content>
