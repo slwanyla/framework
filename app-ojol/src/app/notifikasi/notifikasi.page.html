@@ -1,0 +1,26 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-button fill="clear" (click)="goBack()">
+        <ion-icon name="arrow-back" slot="icon-only" color="dark"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="header-title">Notifikasi</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="notification-content">
+  <div class="notification-container">
+    <div class="notification-item">
+      <ion-icon name="notifications" slot="start" class="notification-icon"></ion-icon>
+      <div class="notification-text">
+        <h3 class="notification-title">Update penting</h3>
+        <p class="notification-description">
+          Berisi update perihal pesanan, trip, dan transaksi.<br>
+          Jadi harus diaktifin.
+        </p>
+        <div class="divider"></div>
+      </div>
+    </div>
+  </div>
+</ion-content>

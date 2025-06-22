@@ -1,0 +1,7 @@
+{
+  "name": "app-ojol",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}

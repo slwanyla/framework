@@ -1,0 +1,85 @@
+<ion-content class="driver-found-container">
+  <div class="header-box">
+    <h2>Driver Anda Sudah <br> Ditemukan!</h2>
+    <p>Driver akan menuju lokasi penjemputan</p>
+  </div>
+
+  <div class="card-box">
+    <!-- Wrapper driver + chat icon -->
+    <div class="driver-info-wrapper">
+      <!-- Driver info: tampilkan jika ada driver -->
+      <div class="driver-info" *ngIf="driver; else noDriver">
+        <div class="driver-photo" [style.backgroundImage]="'url(' + (driver?.foto || 'assets/img/default-driver.png') + ')'"></div>
+        <div class="driver-detail">
+          <strong>{{ driver.nama }}</strong>
+          <div class="rating">
+            <ion-icon name="star" color="warning"></ion-icon>
+            <span>{{ driver.rating }}</span>
+          </div>
+          <p>{{ driver.kendaraan_merk }} - {{ driver.kendaraan_warna }}<br>{{ driver.plat_nomor }}</p>
+        </div>
+      </div>
+
+      <!-- Template kalau driver belum ada -->
+      <ng-template #noDriver>
+        <div class="driver-info no-driver">
+          <p>Driver belum tersedia saat ini.</p>
+        </div>
+      </ng-template>
+
+     <ion-icon name="chatbubble-ellipses-outline" class="chat-icon" (click)="openChat()"
+></ion-icon>
+
+    </div>
+
+    <div class="map-container" id="map"></div>
+    <p *ngIf="driver?.latitude">Driver mendekati Anda ({{ distanceToDriver }} km)</p>
+
+    <strong>{{ formatStatus(statusPerjalanan) }}</strong>
+
+
+    <div class="payment-detail">
+      <h3>Detail Pembayaran</h3>
+
+      <div class="location-info">
+        <ion-icon name="location-sharp"></ion-icon>
+        <div>
+          <p class="label">Lokasi Jemput</p>
+          <p class="text">{{ pickupAddress }}</p>
+        </div>
+      </div>
+
+      <div class="location-info">
+        <ion-icon name="flag-sharp"></ion-icon>
+        <div>
+          <p class="label">Lokasi Tujuan</p>
+          <p class="text">{{ destinationAddress }}</p>
+        </div>
+      </div>
+
+      <div class="biaya">
+        <p>Ongkos Kirim <span>Rp. {{ ongkosKirim | number:'1.0-0' }}</span></p>
+        <p>Biaya admin <span>Rp. {{ biayaAdmin | number:'1.0-0' }}</span></p>
+        <p>Pajak (PPN 10%) <span>Rp. {{ pajak | number:'1.0-0' }}</span></p>
+      </div>
+      <div class="separator-line"></div>
+
+      <div class="total">
+        <strong>Total Pembayaran <span>Rp. {{ totalHarga | number:'1.0-0' }}</span></strong>
+        <p class="keterangan">Sudah termasuk semua biaya</p>
+      </div>
+
+      <div class="metode">
+        <p><strong>Metode Pembayaran</strong></p>
+        <p>{{ getLabel(metodePembayaran) }}</p>
+      </div>
+    </div>
+
+    <div class="action-buttons">
+      <ion-button class="btn-cancel" expand="block" shape="round" (click)="batalKeBeranda()">Cancel</ion-button>
+      <ion-button class="btn-done" expand="block" shape="round" (click)="lanjutkanKeSampaiTujuan()">Selesai</ion-button>
+    </div>
+  </div>
+
+  <div class="footer-box"></div>
+</ion-content>

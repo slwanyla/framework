@@ -1,0 +1,80 @@
+<ion-content>
+  <div class="header">
+    <div class="logo-title">
+      <img src="assets/logo-jek.png" alt="Logo" class="logo-img" />
+    </div>
+    <ion-icon name="download-outline" class="download-icon" (click)="downloadRiwayat()"></ion-icon>
+    <h2>Aktivitas Anda<span>.</span></h2>
+  </div>
+
+<!-- Ringkasan Aktivitas -->
+<div class="summary-card">
+  <div class="summary-title">
+    <ion-icon name="stats-chart-outline" class="summary-icon"></ion-icon>
+    <h4>Aktivitas Hari Ini</h4>
+  </div>
+  <div class="summary-content">
+    <div>Order Masuk <b>5</b></div>
+    <div>Selesai <b>4</b></div>
+    <div>Pendapatan <b>Rp. 100.000</b></div>
+    <div>Waktu Aktif <b>2 Jam 15 Menit</b></div>
+  </div>
+</div>
+
+<!-- Filter Tabs -->
+<div class="tab-filter">
+  <button class="filter-button" [class.active]="selectedFilter === 'hariini'" (click)="changeFilter('hariini')"> Hari Ini </button>
+  <button class="filter-button" [class.active]="selectedFilter === 'kemarin'" (click)="changeFilter('kemarin')"> Kemarin </button>
+  <button class="filter-button" [class.active]="selectedFilter === 'minggu'" (click)="changeFilter('minggu')"> Minggu Ini </button>
+  <button class="filter-button" [class.active]="selectedFilter === 'semua'" (click)="changeFilter('semua')"> Semua </button>
+</div>
+
+
+<!-- Riwayat Layanan -->
+  <div class="history-section">
+    <h4>Riwayat Layanan</h4>
+    <div *ngFor="let riwayat of [1,2,3]">
+      <ion-card class="history-card">
+        <ion-card-content>
+          <div class="card-header">
+            <b>Riffa Reinda Warich</b>
+            <span class="status">Selesai</span>
+          </div>
+          <div class="card-body">
+            <ion-icon name="location-sharp"></ion-icon>
+            <div class="alamat">
+              <p>Perum Karaba Indah Blok R.48</p>
+              <p>Universitas Buana Perjuangan</p>
+            </div>
+            <div class="detail">
+              <p><b>Rp 24.000</b></p>
+              <p>09.00</p>
+            </div>
+          </div>
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </div>
+</ion-content>
+
+<!-- Footer -->
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" (click)="goToHome()">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Beranda</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="activity">
+      <ion-icon name="reader-outline"></ion-icon>
+      <ion-label>Aktivitas</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="income" (click)="goToIncome()">
+      <ion-icon name="wallet-outline"></ion-icon>
+      <ion-label>Pendapatan</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="settings" (click)="goToSettings()">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Pengaturan</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

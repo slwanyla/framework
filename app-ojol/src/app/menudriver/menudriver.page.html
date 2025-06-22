@@ -1,0 +1,122 @@
+<ion-content class="driver-home" scroll-y="false">
+
+  <!-- Header melengkung -->
+  <div class="header" style="cursor: pointer;">
+    <div class="profile-info">
+      <div class="avatar">
+        <img *ngIf="profile.photo; else defaultFoto" [src]="profile.photo" alt="Foto Profil" />
+        <ng-template #defaultFoto>
+          <ion-icon name="person-circle" size="large" class="default-avatar-icon"></ion-icon>
+        </ng-template>
+      </div>      
+      <div class="name-status" (click)="goToProfilDriver()">
+        <h2>{{profile.name}}</h2>
+        <p class="plate">{{profile.merek}}–{{profile.no_plat}}</p>
+        <ion-icon name="star" color="light"></ion-icon>
+        <span>4.9 (120 penilaian)</span>
+      </div>
+      <ion-toggle slot="end" checked (ionChange)="toggleAktif($event)"></ion-toggle>
+    </div>
+  </div>
+  
+
+  <!-- Kartu menumpuk di atas header -->
+  <div class="request-card" *ngIf="tampilkanRequestCard">
+  <div class="waiting-status">
+    <ion-icon name="hourglass-outline"></ion-icon>
+    <p>Order Masuk</p>
+  </div>
+
+  <!-- ✅ Tambahan Detail Lokasi -->
+  <div class="lokasi-info">
+    <p><strong>Atas Nama:</strong> {{ orderMasuk?.customer?.nama || '-' }}</p>
+    <p><strong>Dari:</strong> {{ orderMasuk?.lokasi_jemput }}</p>
+    <p><strong>Tujuan:</strong> {{ orderMasuk?.lokasi_tujuan }}</p>
+    <p><strong>Tarif:</strong> Rp {{ orderMasuk?.tarif | number:'1.0-0' }}</p>
+  </div>
+
+  <div class="buttons">
+    <ion-button fill="outline" color="dark" size="small" (click)="tolakPermintaan()">Tolak</ion-button>
+    <ion-button size="small" class="terima" (click)="terimaPermintaan()">Terima</ion-button>
+  </div>
+</div>
+
+<div *ngIf="loadingLokasi && !lokasiBerhasil" class="lokasi-loading">
+  <ion-spinner name="dots"></ion-spinner>
+  <p>🔄 Mengambil lokasi...</p>
+</div>
+
+<div *ngIf="!loadingLokasi && !lokasiBerhasil" class="lokasi-error">
+  <ion-text color="danger">❌ Gagal mendapatkan lokasi</ion-text>
+  <ion-button expand="block" (click)="getCurrentLocation()">Coba Lagi</ion-button>
+</div>
+
+
+
+  
+
+  <div class="navigation-card">
+    <div class="nav-header">
+      <ion-icon name="location-outline"></ion-icon>
+      <p class="text">Navigasi Aktif</p>
+    </div>
+    <ion-button fill="outline" size="small" (click)="lihatRute()">Lihat Rute</ion-button>
+    <p class="note">Update posisi terkirim otomatis ke sistem</p>
+  </div>
+
+  <div class="history-card" (click)="goToRiwayat()" style="cursor: pointer;">
+    <div class="history-header">
+    <ion-icon name="timer-outline"></ion-icon>
+      <p>Riwayat Layanan</p>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </div>
+
+    <div class="history-item">
+      <div class="history-name-status">
+        <p class="name">Rifha Reinda Warich</p>
+        <p class="status">Selesai</p>
+      </div>
+
+  <div class="history-location">
+    <div class="address-text">
+      <p>
+        <ion-icon name="person-sharp"></ion-icon>
+        Perum Karaba Indah Blok R.48
+      </p>
+      <p class="destination">
+        <ion-icon name="location-sharp"></ion-icon>
+        Universitas Buana Perjuangan
+      </p>
+    </div>
+  </div>
+
+
+      <div class="history-footer">
+        <p class="price">Rp 24.000</p>
+        <p class="time">09.00</p>
+      </div>
+    </div>
+  </div>
+
+
+  <ion-footer>
+    <ion-tab-bar slot="bottom">
+      <ion-tab-button tab="home">
+        <ion-icon name="home-outline"></ion-icon>
+        <ion-label>Beranda</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="goToActivity()" tab="activity">
+        <ion-icon name="reader-outline"></ion-icon>
+        <ion-label>Aktivitas</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="goToIncome()" tab="income">
+        <ion-icon name="wallet-outline"></ion-icon>
+        <ion-label>Pendapatan</ion-label>
+      </ion-tab-button>
+      <ion-tab-button (click)="goToSettings()" tab="settings">
+        <ion-icon name="settings-outline"></ion-icon>
+        <ion-label>Pengaturan</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-footer>
+  

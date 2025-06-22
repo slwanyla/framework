@@ -1,0 +1,55 @@
+<ion-content class="map-container">
+
+  <!-- PETA -->
+  <div class="map-wrapper">
+    <div id="map-tujuan-akhir"></div>
+    <ion-button fill="clear" class="navigate-btn">
+      <ion-icon name="navigate-outline"></ion-icon>
+    </ion-button>
+  </div>
+
+  <!-- KARTU INFORMASI -->
+  <div class="info-card">
+    <!-- Ikon chat -->
+    <ion-icon name="chatbubble-ellipses-outline" class="chat-icon" (click)="bukaChat()"></ion-icon>
+
+    <!-- Profil -->
+    <div class="profile-section">
+      <div class="avatar-placeholder"></div>
+      <div class="user-info">
+        <h3 class="name">{{ customerNama }}</h3>
+      </div>
+    </div>
+
+    <!-- Tujuan -->
+    <div class="university-row">
+      <ion-icon name="location-sharp"></ion-icon>
+      <p class="university">{{ destinationAddress }}</p>
+    </div>
+
+    <div class="divider-line"></div>
+
+    <!-- Status -->
+    <div class="status-info">
+      <p class="status-text">Selesai</p>
+      <p class="status-time">
+        Perkiraan jarak: {{ jarakKeTujuan || '...' }} km
+      </p>
+    </div>
+
+    <div class="spacer"></div>
+
+    <!-- Tombol aksi -->
+    <ion-button expand="block" class="finish-button" (click)="selesaikanTujuan()">
+      Selesaikan Tujuan
+    </ion-button>
+    <ion-button expand="block" fill="outline" class="review-button" (click)="loadMap()">
+      Lihat Ulang Tujuan
+    </ion-button>
+
+    <p class="footer-note">
+      Jangan lupa konfirmasi penyelesaian layanan setelah sampai tujuan.
+    </p>
+  </div>
+
+</ion-content>

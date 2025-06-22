@@ -1,0 +1,302 @@
+.aktivitas-container {
+    --background: #f5f0e6;
+    font-family: 'Poppins', sans-serif;
+}
+  
+.header-card {
+    background: #192559;
+    color: white;
+    padding: 16px;
+    border-bottom-left-radius: 25px;
+    border-bottom-right-radius: 25px;
+}
+  
+.header-top {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 8px;
+}
+  
+.logo-wrapper {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+}
+  
+.judul {
+    font-size: 20px;
+    font-weight: 600;
+    margin: 0;
+    margin-left: 10px;
+    margin-top: -15px;
+    display: block; 
+}
+  
+.logo {
+    width: 140px;
+    height: 90px;
+    transform: scale(1.8); 
+    transform-origin: center; 
+    margin-left: 20px;
+    margin-top: -20px;
+}
+  
+.download-icon {
+    font-size: 30px;
+}
+
+ion-segment {
+    --background: transparent;
+    --indicator-color: white;
+    --color-checked: white;
+    --color: rgba(255,255,255,0.8);
+    font-size: 13px;
+}
+
+ion-segment-button {
+    font-size: 12px;
+    min-width: 100px; 
+    white-space: nowrap; 
+    padding: 0 16px; 
+    color: #fff;
+}
+
+.filter-row {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 12px;
+    flex-wrap: wrap;
+    gap: 6px;
+}
+  
+.history-card {
+    background: #f1f1f1;
+    margin: 0 16px 12px;
+    border-radius: 16px;
+    padding: 12px;
+}
+  
+.info-row {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+    color: #777;
+    margin-bottom: 8px;
+}
+  
+.content {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+}
+  
+.icon-placeholder {
+    width: 40px;
+    height: 40px;
+    background: white;
+    border-radius: 10px;
+}
+  
+h3 {
+    font-size: 14px;
+    margin: 0 0 4px;
+}
+  
+.status {
+    font-size: 12px;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+}
+  
+.status.success {
+    color: green;
+}
+  
+.status.cancelled {
+    color: #888;
+}
+  
+ion-footer {
+    background: #192559;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+  
+ion-tab-bar {
+    --background: #192559;
+    --color: #fff;
+    --color-selected: #fff;
+}
+  
+.status-list {
+  .status-option {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      padding: 10px 14px;
+  
+  .custom-radio {
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        border: 2px solid #ccc;
+        position: relative;
+        transition: border-color 0.2s, background-color 0.2s;
+  
+  &.checked {
+          border-color: #007aff;
+          background-color: #007aff;
+  }
+  
+ &.checked::after {
+          content: '';
+          width: 6px;
+          height: 6px;
+          background-color: #fff;
+          border-radius: 50%;
+          position: absolute;
+          top: 3px;
+          left: 3px;
+  }
+  }
+  
+ion-label {
+  font-size: 14px;
+        color: #333;
+    }
+  }
+}
+
+/* Modal styling */
+.filter-modal {
+  width: 100%;
+  height: auto;
+  border-radius: 30px 30px 0 0;
+  margin-top: 500px;
+}
+
+.modal-content {
+  padding: 20px 16px;
+}
+
+.modal-title {
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 20px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.close-icon {
+  font-size: 24px;
+  cursor: pointer;
+  color: #000;
+  padding: 5px;
+}
+
+.status-options {
+  margin-bottom: 20px;
+}
+
+.status-option {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 0;
+  border-bottom: 1px solid #000;
+}
+
+.status-option span {
+  font-size: 14px;
+}
+
+/* Custom radio button styling */
+.radio-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  cursor: pointer;
+}
+
+.radio-container input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkmark {
+  height: 20px;
+  width: 20px;
+  border-radius: 50%;
+  border: 2px solid #000;
+  display: inline-block;
+  position: relative;
+}
+
+.radio-container input:checked ~ .checkmark {
+  border-color: #19447F;
+}
+
+.radio-container input:checked ~ .checkmark:after {
+  content: "";
+  position: absolute;
+  display: block;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #19447F;
+}
+
+/* Green indicator for "Selesai" option */
+.radio-container input:checked ~ .checkmark.complete:before {
+  content: "";
+  position: absolute;
+  display: block;
+  right: -20px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #4CAF50;
+}
+
+/* Button row styling */
+.button-row {
+  display: flex;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.reset-btn, .apply-btn {
+  flex: 1;
+  padding: 12px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.reset-btn {
+  background-color: white;
+  color: #333;
+  border: 1px solid #000;
+}
+
+.apply-btn {
+  background-color: #19447F;
+  color: white;
+  border: none;
+}

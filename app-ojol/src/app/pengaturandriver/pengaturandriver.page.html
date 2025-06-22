@@ -1,0 +1,77 @@
+<ion-content fullscreen="true">
+  <!-- Header -->
+  <div class="header-container">
+    <h2>Pengaturan</h2>
+  </div>
+
+  <!-- Section Akun -->
+  <div class="section akun-section">
+    <h3 class="section-title">Akun</h3>
+    <ion-item lines="none" button (click)="goToEditProfile()">
+      <ion-label>Edit Profile</ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" button (click)="logout()">
+      <ion-label>Logout</ion-label>
+      <ion-icon name="log-out-outline" slot="end"></ion-icon>
+    </ion-item>
+    <hr class="section-divider" />
+  </div>
+
+  <!-- Section Notifikasi -->
+  <div class="section notifikasi-section">
+    <h3 class="section-title">Notifikasi</h3>
+    <ion-item lines="none">
+      <ion-label>Notifikasi Order Masuk</ion-label>
+      <ion-toggle slot="end" checked></ion-toggle>
+    </ion-item>
+    <hr class="section-divider" />
+  </div>
+
+  <!-- Section Privasi -->
+  <div class="section privasi-section">
+    <h3 class="section-title">Privasi & Keamanan</h3>
+    <ion-item lines="none">
+      <ion-label>Lokasi Aktif</ion-label>
+      <ion-toggle slot="end" checked></ion-toggle>
+    </ion-item>
+    <hr class="section-divider" />
+  </div>
+
+  <!-- Section Bantuan -->
+  <div class="section bantuan-section">
+    <h3 class="section-title">Bantuan</h3>
+    <ion-item lines="none" button (click)="goToPusatBantuan()">
+      <ion-label>Pusat Bantuan</ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+    <ion-item lines="none" button (click)="goToHubungiAdmin()">
+      <ion-label>Hubungi Admin</ion-label>
+      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+    </ion-item>
+    <hr class="section-divider" />
+  </div>
+</ion-content>
+
+<!-- Bottom Nav -->
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" (click)="goToHome()">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Beranda</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="activity" (click)="goToActivity()">
+      <ion-icon name="reader-outline"></ion-icon>
+      <ion-label>Aktivitas</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="income" (click)="goToIncome()">
+      <ion-icon name="wallet-outline"></ion-icon>
+      <ion-label>Pendapatan</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="settings">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Pengaturan</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>
+

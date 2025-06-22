@@ -1,0 +1,129 @@
+ion-header {
+  ion-toolbar {
+    --background: #192057;
+    color: white;
+
+    ion-title {
+      font-weight: 500;
+    }
+
+    ion-back-button {
+      color: white;
+    }
+  }
+}
+
+.profile-header {
+  background-color: #192057;
+  padding: 16px;
+  padding-bottom: 24px;
+  color: white;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+
+.profile-info {
+  display: flex;
+  align-items: center;
+  position: relative;
+
+  ion-avatar {
+  background-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+.default-avatar-icon {
+  font-size: 64px; 
+  color: #ccc; 
+}
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+  }
+
+.user-details {
+  flex: 1;
+  margin-left: 16px;
+
+  h2 {
+    margin: 0;
+    margin-bottom: 4px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+  }
+
+  p {
+    margin: 0;
+    font-size: 15px;
+    color: #e2e2e2;
+    }
+  }
+
+.edit-button {
+  position: absolute;
+  top: 0;
+  right: 0;
+  --color: white;
+  --padding-start: 8px;
+  --padding-end: 8px;
+  --padding-top: 8px;
+  --padding-bottom: 8px;
+
+  ion-icon {
+    font-size: 20px;
+    }
+  }
+  }
+}
+
+.menu-section {
+  background-color: #f0eee4; /* Ganti dengan warna cream sesuai kebutuhan */
+  padding: 20px 16px;
+  height: 100%;
+
+  h3 {
+    margin: 0;
+    margin-bottom: 16px;
+    font-size: 22px;
+    font-weight: 650;
+    margin-left: 16px;
+    color: #000;
+  }
+
+  ion-list {
+    background-color: transparent;
+
+  ion-item {
+    --background: #f0eee4; /* Menyamakan warna dengan background cream */
+    --padding-start: 16px;
+    --padding-end: 16px;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    min-height: 60px;
+    margin-bottom: 12px;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+      
+  ion-icon[slot="start"] {
+    font-size: 27px;
+    color: #000;
+    margin-right: 10px;
+  }
+
+  ion-icon[slot="end"] {
+    font-size: 19px;
+    color: #999;
+  }
+
+  ion-label {
+    font-size: 17px;
+    font-weight: bold;
+    color: #000;
+  }
+  }
+  }
+}

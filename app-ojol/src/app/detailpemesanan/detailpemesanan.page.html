@@ -1,0 +1,82 @@
+<ion-content class="booking-container">
+  <div class="header">
+    <ion-icon name="arrow-back-outline" class="back-icon" (click)="goBack()"></ion-icon>
+    <h2>Pilih Lokasi Jemput & <br />Lokasi Tujuan Anda.</h2>
+    <p>Silahkan pilih lokasi tempat anda akan di jemput dan tujuan anda untuk melanjutkan proses pemesanan.</p>
+  </div>
+
+  <div class="map-container" id="map-detail"></div>
+
+  <div class="order-detail">
+    <div class="order-header">
+      <h3>DETAIL PEMESANAN ANDA</h3>
+      <p>Berikut adalah informasi pemesanan Anda. Periksa kembali detail pemesanan sebelum melanjutkan proses pemesanan.</p>
+    </div>
+
+    <div class="order-content">
+      <div class="location-info">
+        <div class="dot-line">
+          <div class="dot"></div>
+          <div class="line"></div>
+          <div class="dot"></div>
+        </div>
+        <div class="location-labels">
+          <p>Titik jemput penumpang: <strong>{{ pickupAddress || 'Belum dipilih' }}</strong></p>
+          <p>Titik tujuan penumpang: <strong>{{ destinationAddress || 'Belum dipilih' }}</strong></p>
+        </div>
+      </div>
+
+      <!-- Hanya Harga -->
+      <div class="price-code">
+        <div class="price">Rp.{{ totalHarga | number:'1.0-0' }}</div>
+      </div>
+
+      <!-- Metode Pembayaran -->
+      <div class="payment-section">
+        <div class="section-header"></div>
+
+        <div class="payment-button" (click)="showPaymentOptions = true">
+          <span>{{ selectedMethod ? getLabel(selectedMethod) : 'Pilih Metode Pembayaran' }}</span>
+          <ion-icon name="chevron-down-outline"></ion-icon>
+        </div>
+
+        <div class="payment-options-modal" *ngIf="showPaymentOptions">
+          <div class="modal-header">
+            <h4>Pilih Metode</h4>
+            <ion-icon name="close-outline" class="close-icon" (click)="showPaymentOptions = false"></ion-icon>
+          </div>
+
+          <div class="payment-option" [class.selected]="selectedMethod === 'tunai'" (click)="selectMethod('tunai')">
+            <span>Tunai</span>
+            <ion-icon name="checkmark-outline" *ngIf="selectedMethod === 'tunai'"></ion-icon>
+          </div>
+          <div class="payment-option" [class.selected]="selectedMethod === 'transfer'" (click)="selectMethod('transfer')">
+            <span>Transfer Bank</span>
+            <ion-icon name="checkmark-outline" *ngIf="selectedMethod === 'transfer'"></ion-icon>
+          </div>
+          <div class="payment-option" [class.selected]="selectedMethod === 'ewallet'" (click)="selectMethod('ewallet')">
+            <span>E-Wallet</span>
+            <ion-icon name="checkmark-outline" *ngIf="selectedMethod === 'ewallet'"></ion-icon>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tombol -->
+      <ion-button expand="block" class="search-btn" (click)="pesanSekarang()">Cari Driver sekarang juga</ion-button>
+      <div class="driver-list" *ngIf="driverList.length > 0">
+  <h3>Driver Terdekat</h3>
+  <div *ngFor="let driver of driverList" class="driver-card">
+    <div class="driver-icon">
+      <ion-icon name="car-outline"></ion-icon>
+    </div>
+    <div class="driver-info">
+      <div class="driver-nama">{{ driver.nama }}</div>
+      <div class="driver-kendaraan">{{ driver.merek }} - {{ driver.warna }}</div>
+      <div class="driver-plat">{{ driver.plat_nomor }}</div>
+      <div class="driver-jarak">{{ driver.jarak }} km dari Anda</div>
+    </div>
+  </div>
+</div>
+    </div>
+  </div>
+</ion-content>

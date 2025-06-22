@@ -1,0 +1,266 @@
+.booking-container {
+  --background: #f5f0e6;
+
+  .header {
+    background-color: #0c1e47;
+    color: #fff;
+    padding: 22px 18px;
+    border-bottom: 1px solid white;
+    border-bottom-left-radius: 45px;
+    border-bottom-right-radius: 45px;
+    text-align: center;
+
+    h2 {
+      font-size: 1.2rem;
+      font-weight: bold;
+      margin: -5px auto 20px;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #e0e0e0;
+      margin-top: 10px;
+    }
+
+    .back-icon {
+      position: absolute;
+      left: 16px;
+      top: 20px;
+      font-size: 1.5rem;
+    }
+  }
+
+  .map-container {
+    height: 30vh;
+    width: 80%;
+    max-width: 500px;
+    border-radius: 15px;
+    margin: 15px auto 10px;
+    overflow: hidden;
+  }
+  .order-detail {
+    background-color: #fff;
+    margin-top: 50px;
+    padding: 0;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding-bottom: 30px;
+
+    .order-content {
+      background-color: #ffffff;
+      border-top-left-radius: 25px;
+      border-top-right-radius: 25px;
+      padding-top: 10px;
+      padding-bottom: 20px;
+    }
+
+    .order-header {
+      background-color: #0d1e66;
+      color: white;
+      padding: 10px 16px;
+      width: 100vw;
+      height: 110px;
+      margin-left: calc(-1 * (100vw - 100%) / 2);
+      margin-bottom: 15px;
+      margin-top: -50px;
+
+      h3 {
+        font-size: 16px;
+        margin-bottom: 10px;
+        margin-top: 5px;
+      }
+
+      p {
+        font-size: 14px;
+      }
+    }
+  }
+
+  .location-info {
+    display: flex;
+    align-items: flex-start;
+    padding: 15px;
+    background-color: #fff;
+    color: black;
+
+    .dot-line {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-right: 10px;
+      margin-top: -30px;
+
+      .dot {
+        width: 14px;
+        height: 14px;
+        border: 2px solid black;
+        border-radius: 50%;
+        margin: 5px 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        &::after {
+          content: '';
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          display: block;
+        }
+      }
+
+      .dot:first-child::after {
+        background-color: #000;
+      }
+
+      .dot:last-child::after {
+        background-color: #fff;
+      }
+
+      .line {
+        width: 2px;
+        height: 30px;
+        background-color: black;
+      }
+    }
+
+    .location-labels {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+
+      p:first-child {
+        margin: -25px 0 30px 0;
+        font-size: 14px;
+      }
+
+      p:last-child {
+        margin: 5px 0 0;
+        font-size: 14px;
+      }
+    }
+  }
+
+  .price-code {
+    padding: 10px 15px;
+
+    .price {
+      font-size: 16px;
+      font-weight: bold;
+      color: #000;
+      min-width: 90px;
+      margin-top: -4px;
+      margin-left: 310px;
+    }
+  }
+
+  ion-select {
+    margin: 10px;
+    --border-radius: 12px;
+    --padding-start: 10px;
+    font-size: 14px;
+    margin-top: -15px;
+  }
+
+ .search-btn {
+  margin: 30px auto 0 auto; // Tengah horizontal
+  --background: #1e2a78;
+  --border-radius: 20px;
+  font-size: 15px;
+  width: 70%; // atau misalnya 220px
+  max-width: 280px;
+  margin-top: 3 0px;
+}
+}
+
+.payment-button {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1.5px solid #0c1e47;
+  padding: 5px 14px;
+  border-radius: 24px;
+  font-size: 15px;
+  color: #000;
+  font-weight: 600;
+  cursor: pointer;
+  background-color: white;
+  max-width: 230px;
+  margin-left: 16px; // Tambahkan ini
+
+  ion-icon {
+    font-size: 18px;
+    color: #0c1e47;
+  }
+}
+
+.payment-options-modal {
+  background: #fff;
+  border-radius: 16px;
+  margin: 10px auto; // auto agar berada di tengah
+  padding: 8px 14px;
+  box-shadow: 0 4px 12px rgba(0.5, 0.5, 0.5, 0.5);
+  width: calc(70% - 10px);
+  margin-left: 20px;
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 10px;
+    border-bottom: 1px solid #ccc;
+
+    h4 {
+      font-size: 15px; // Ukuran font dikecilkan di sini
+      font-weight: 600;
+      margin: 0;
+    }
+    .close-icon {
+      font-size: 22px;
+      cursor: pointer;
+    }
+  }
+
+  .payment-option {
+    padding: 8px 12px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 13px;
+    border-radius: 6px;
+    border-top: 1px solid #eee;
+    cursor: pointer;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    &.selected {
+      background-color: #f0f8ff;
+      border-radius: 8px;
+    }
+
+    ion-icon {
+      font-size: 18px;
+      color: green;
+    }
+  }
+}
+
+:host {
+  display: block;
+  height: 100%;
+}
+
+ion-content {
+  --background: transparent !important; // biar gak override cream-nya
+}
+
+.booking-container {
+  min-height: 100vh;
+  background-color: #ffffff; // pastikan putihnya penuh
+
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
