@@ -117,15 +117,13 @@ export class SampaitujuanPage implements OnInit, OnDestroy {
 
   getLabel(method: string): string {
     switch (method) {
-      case 'tunai': return 'Tunai';
-      case 'transfer': return 'Transfer Bank';
-      case 'ewallet': return 'E-Wallet';
+      case 'ewallet': return 'Qris';
       default: return method;
     }
   }
 
-  goToRating() {
-    this.router.navigate(['/rating'], {
+  goBack() {
+    this.router.navigate(['/beranda'], {
       queryParams: {
         nama: this.nama,
         foto: this.foto,
