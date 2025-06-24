@@ -9,6 +9,8 @@ use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ChatController;
 use App\Http\Controllers\AdminUserController;
 use App\Http\Controllers\DriverStatusController;
+use App\Http\Controllers\Admin\LaporanPenghasilanController;
+use App\Http\Controllers\Admin\TarifController;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,11 +31,11 @@ Route::get('/', function () {
 
 // ✅ Form signup & prosesnya
 // Menampilkan form pendaftaran (showSignUp) dan memproses datanya (signUp).
-Route::get('/signup', [AuthController::class, 'showSignUp'])->name('signup');
-Route::post('/signup', [AuthController::class, 'signUp'])->name('signup.process');
+Route::get('/signup', [UserAuthController::class, 'showSignUp'])->name('signup');
+Route::post('/signup', [UserAuthController::class, 'signUp'])->name('signup.process');
 
 // ✅ Form login & prosesnya
-Route::post('/login', [AuthController::class, 'login'])->name('login.process');
+Route::post('/login', [UserAuthController::class, 'login'])->name('login.process');
 
 // ✅ Login & Logout admin
 Route::get('/admin/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
@@ -52,10 +54,15 @@ Route::prefix('admin')->name('admin.')->middleware(['auth:admin'])->group(functi
     Route::resource('tarif', App\Http\Controllers\Admin\TarifController::class)->except(['show']);
 });
 Route::delete('admin/tarif/{id}', [AdminAuthController::class, 'destroy'])->name('admin.tarif.destroy');
-Route::get('/admin/laporan', [AdminAuthController::class, 'laporan'])->name('admin.laporan');
 Route::middleware(['auth:admin'])->prefix('admin')->group(function () {
     Route::get('/chat', [ChatController::class, 'index'])->name('admin.chat');
 });
+
+Route::prefix('admin')->middleware('auth:admin')->name('admin.')->group(function () {
+    Route::get('/laporan', [LaporanPenghasilanController::class, 'index'])->name('laporan.index');
+Route::get('/laporan/export', [LaporanPenghasilanController::class, 'exportExcel'])->name('laporan.export');
+});
+
 
 // ✅ admin update profile
 Route::middleware('auth:admin')->prefix('admin')->name('admin.')->group(function () {
@@ -69,11 +76,19 @@ Route::put('/admin/profile/photo', [AdminProfileController::class, 'updatePhoto'
 Route::delete('/admin/profile/photo', [AdminProfileController::class, 'deletePhoto'])->name('admin.profile.deletePhoto');
 
 // ✅ Verifikasi kode OTP (untuk email)
-Route::get('/verification', [AuthController::class, 'showVerification'])->name('verification');
-Route::post('/verification/verify', [AuthController::class, 'verify'])->name('verification.verify');
-Route::post('/verification/resend', [AuthController::class, 'resendVerificationCode'])->name('verification.resend');
+Route::get('/verification', [UserAuthController::class, 'showVerification'])->name('verification');
+Route::post('/verification/verify', [UserAuthController::class, 'verify'])->name('verification.verify');
+Route::post('/verification/resend', [UserAuthController::class, 'resendVerificationCode'])->name('verification.resend');
 
 // ✅ Route yang hanya bisa diakses setelah login (untuk admin)
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
+});
+
+Route::prefix('admin')->name('admin.')->middleware('auth:admin')->group(function () {
+    // Dashboard
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Tambahkan ini:
+    Route::get('/tarif', [TarifController::class, 'index'])->name('tarif.index');
 });
