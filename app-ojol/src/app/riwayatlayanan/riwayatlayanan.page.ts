@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { HistoryService } from '../services/history.service';
 
 @Component({
   selector: 'app-riwayatlayanan',
@@ -13,17 +14,27 @@ import { CommonModule } from '@angular/common';
 export class RiwayatlayananPage implements OnInit {
   layanan: any[] = [];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private historyService: HistoryService
+  ) {}
 
-  ngOnInit() {
-    this.layanan = [
-      {
-        nama: 'Rifha Reinda Warich',
-        waktu: '09.00',
-        dari: 'Perum Karaba Indah Blok R.48',
-        ke: 'Universitas Buana Perjuangan',
-        harga: 24000,
+  ngOnInit(): void {
+    const role = localStorage.getItem('role') as 'driver' | 'customer';
+    const userId = localStorage.getItem('user_id');
+
+    if (!userId || !role) {
+      console.error('User ID atau role tidak ditemukan di localStorage');
+      return;
+    }
+
+    this.historyService.riwayat(userId, role).subscribe({
+      next: (res: any) => {
+        this.layanan = res.riwayat || [];
       },
-    ];
+      error: (err: any) => {
+        console.error('Gagal ambil riwayat:', err);
+      }
+    });
   }
 }

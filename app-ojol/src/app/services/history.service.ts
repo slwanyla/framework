@@ -19,14 +19,15 @@ export class HistoryService {
   }
 
   // ✅ Ambil aktivitas riwayat order
-  riwayat(userId: string, role: 'customer' | 'driver'): Observable<any> {
+  riwayat(userId: string, role: 'customer' | 'driver', filter: string = 'semua'): Observable<any> {
   const endpoint = role === 'driver'
-    ? `${environment.apiUrl}/riwayat-driver/${userId}`
+    ? `${environment.apiUrl}/riwayat-driver/${userId}?filter=${filter}`
     : `${environment.apiUrl}/riwayat-customer/${userId}`;
 
   return this.http.get(endpoint, {
     headers: this.getHeaders()
   });
 }
+
 
 }

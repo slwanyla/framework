@@ -31,6 +31,7 @@ export class BerandaPage implements OnInit {
       next: (res) => {
         this.loggedInName = res.nama ?? 'Pengguna';
         this.photoUrl = res.photo ?? null;
+        console.log('✅ Photo URL yang diterima:', this.photoUrl)
         localStorage.setItem('loggedInName', this.loggedInName); 
       },
       error: (err) => {

@@ -1,4 +1,4 @@
-import { Component, OnInit, AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
@@ -32,6 +32,10 @@ export class PenumpangnaikPage implements OnInit {
   distanceToDestination: string = '';
   orderId: number = 0;
 
+  isRuteLoaded: boolean = false;
+  isLoadingRute = false;
+
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -56,103 +60,120 @@ export class PenumpangnaikPage implements OnInit {
   }
 
   ionViewDidEnter() {
-  this.setLeafletIcons();
+    this.setLeafletIcons();
 
-  setTimeout(() => {
-    this.loadMap();
-    this.startRealtimeLocationUpdate();
-  }, 500); // delay 0.5 detik agar DOM stabil
-}
+    setTimeout(() => {
+      this.loadMap();
+      this.getInitialLocationAndDrawRoute(); // Ambil posisi awal
+      this.startRealtimeLocationUpdate();    // Update posisi selanjutnya
+    }, 500);
+  }
 
   loadMap() {
     this.map = L.map('map-penumpang-naik').setView([this.pickupLat, this.pickupLng], 15);
-      setTimeout(() => {
-    this.map.invalidateSize();
-  }, 200);
-
-    this.map.invalidateSize();
+    setTimeout(() => this.map.invalidateSize(), 300);
 
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
 
-    // Titik jemput
-    L.marker([this.pickupLat, this.pickupLng]).addTo(this.map)
-      .bindPopup(`Titik Jemput: ${this.alamatJemput}`);
-
-    // Titik tujuan
-    // Titik tujuan
-    L.marker([this.destinationLat, this.destinationLng]).addTo(this.map)
-      .bindPopup(`Tujuan: ${this.destinationAddress}`);
-
+    L.marker([this.pickupLat, this.pickupLng]).addTo(this.map).bindPopup(`Titik Jemput: ${this.alamatJemput}`);
+    L.marker([this.destinationLat, this.destinationLng]).addTo(this.map).bindPopup(`Tujuan: ${this.destinationAddress}`);
   }
 
-  startRealtimeLocationUpdate() {
-  Geolocation.watchPosition({
-    enableHighAccuracy: true,
-    timeout: 30000,
-    maximumAge: 0
-  }, (position, err) => {
-    if (err || !position) {
-      console.error('❌ Gagal ambil lokasi:', err);
-      return;
-    }
+  async getInitialLocationAndDrawRoute(retry = 0) {
+  try {
+    console.log(`⏳ Mencoba ambil lokasi (percobaan ke-${retry + 1})`);
+    this.isLoadingRute = true;
 
-    const lat = position.coords.latitude;
-    const lng = position.coords.longitude;
+    const pos = await Geolocation.getCurrentPosition({
+      enableHighAccuracy: true,
+      timeout: 30000,
+      maximumAge: 0
+    });
+
+    const lat = pos.coords.latitude;
+    const lng = pos.coords.longitude;
+
+    console.log('✅ Lokasi awal berhasil diambil:', lat, lng);
 
     this.updateDriverMarker(lat, lng);
     this.updateDistanceToDestination(lat, lng);
     this.firebaseLocation.updateDriverLocation(this.orderId, lat, lng);
-  });
+
+    this.routeService.getRoute(lng, lat, this.destinationLng, this.destinationLat).subscribe({
+      next: (res) => {
+        const geojsonRoute = res.features?.[0];
+        if (!geojsonRoute) return;
+
+        if (this.routeLayer) this.map.removeLayer(this.routeLayer);
+        this.routeLayer = L.geoJSON(geojsonRoute, {
+          style: { color: '#007bff', weight: 4 }
+        }).addTo(this.map);
+
+        const bounds = L.latLngBounds([
+          [lat, lng],
+          [this.destinationLat, this.destinationLng]
+        ]);
+        this.map.fitBounds(bounds, { padding: [50, 50] });
+
+        this.isRuteLoaded = true;
+        this.isLoadingRute = false;
+        console.log('🗺️ Rute berhasil ditampilkan.');
+      },
+      error: (err) => {
+        console.error('❌ Gagal ambil rute awal:', err);
+        this.isLoadingRute = false;
+      }
+    });
+
+  } catch (err) {
+    console.error(`❌ Gagal ambil lokasi (percobaan ke-${retry + 1}):`, err);
+
+    if (retry < 2) {
+      setTimeout(() => this.getInitialLocationAndDrawRoute(retry + 1), 3000); // retry 2x, delay 3 detik
+    } else {
+      alert('❌ Gagal mendapatkan lokasi. Pastikan GPS aktif dan izin lokasi diberikan.');
+    }
+    this.isLoadingRute = false;
+  }
 }
 
+
+
+  startRealtimeLocationUpdate() {
+    Geolocation.watchPosition({
+      enableHighAccuracy: true,
+      timeout: 30000,
+      maximumAge: 0
+    }, (position, err) => {
+      if (err || !position) {
+        console.error('❌ Gagal ambil lokasi realtime:', err);
+        return;
+      }
+
+      const lat = position.coords.latitude;
+      const lng = position.coords.longitude;
+
+      this.updateDriverMarker(lat, lng);
+      this.updateDistanceToDestination(lat, lng);
+      this.firebaseLocation.updateDriverLocation(this.orderId, lat, lng);
+    });
+  }
 
   updateDriverMarker(lat: number, lng: number) {
-  // Update posisi marker driver
-  if (this.driverMarker) {
-    this.driverMarker.setLatLng([lat, lng]);
-  } else {
-    this.driverMarker = L.marker([lat, lng], {
-      icon: L.icon({
-        iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
-        iconSize: [30, 30],
-        iconAnchor: [15, 30]
-      })
-    }).addTo(this.map).bindPopup('Posisi Anda');
+    if (this.driverMarker) {
+      this.driverMarker.setLatLng([lat, lng]);
+    } else {
+      this.driverMarker = L.marker([lat, lng], {
+        icon: L.icon({
+          iconUrl: 'https://cdn-icons-png.flaticon.com/512/684/684908.png',
+          iconSize: [30, 30],
+          iconAnchor: [15, 30]
+        })
+      }).addTo(this.map).bindPopup('Posisi Anda');
+    }
   }
-    if (!this.destinationLat || !this.destinationLng) {
-    console.warn('❌ Tujuan belum tersedia');
-    return;
-  }
-
-  // 💡 Gambar ulang rute ke tujuan
-  this.routeService.getRoute(lng, lat, this.destinationLng, this.destinationLat).subscribe({
-    
-    next: (res) => {
-      const geojsonRoute = res.features?.[0];
-      if (!geojsonRoute) return;
-
-      // Hapus rute lama jika ada
-      if (this.routeLayer) this.map.removeLayer(this.routeLayer);
-
-      // Tambahkan rute baru ke tujuan
-      this.routeLayer = L.geoJSON(geojsonRoute, {
-        style: { color: '#007bff', weight: 4 }
-      }).addTo(this.map);
-
-      // 💡 Update tampilan map supaya semua elemen terlihat
-      const bounds = L.latLngBounds([
-        [lat, lng],
-        [this.destinationLat, this.destinationLng]
-      ]);
-      this.map.fitBounds(bounds, { padding: [50, 50] });
-
-    },
-    error: (err) => console.error('❌ Gagal ambil rute:', err)
-  });
-}
-
 
   updateDistanceToDestination(driverLat: number, driverLng: number) {
     const jarak = this.hitungJarak(driverLat, driverLng, this.destinationLat, this.destinationLng);
@@ -185,22 +206,21 @@ export class PenumpangnaikPage implements OnInit {
   }
 
   kirimStatus(status: string) {
-  this.orderService.updatePerjalanan(this.orderId, status)
-    .subscribe({
-      next: () => console.log('✅ Status updated:', status),
-      error: err => console.error('❌ Gagal update status:', err)
-    });
-}
+    this.orderService.updatePerjalanan(this.orderId, status)
+      .subscribe({
+        next: () => console.log('✅ Status updated:', status),
+        error: err => console.error('❌ Gagal update status:', err)
+      });
+  }
 
-updateStatus(status: string) {
-  this.firebaseLocation.updateStatus(this.orderId, status);
-}
-
+  updateStatus(status: string) {
+    this.firebaseLocation.updateStatus(this.orderId, status);
+  }
 
   customerNaik() {
-    this.kirimStatus('selesai'); 
+    this.kirimStatus('selesai');
     this.updateStatus('selesai');
-    this.router.navigate(['/tujuanakhir'], {
+    this.router.navigate(['/ringkasanorder'], {
       queryParams: {
         pickupAddress: this.alamatJemput,
         destinationAddress: this.alamatTujuan,
@@ -208,8 +228,11 @@ updateStatus(status: string) {
         destinationLng: this.destinationLng,
         totalHarga: this.totalHarga,
         nama: this.customerNama,
-        pickupLat: this.pickupLat, // ✅ WAJIB DITAMBAH
+        pickupLat: this.pickupLat,
         pickupLng: this.pickupLng,
+        orderId:this.orderId
+
+        
 
       }
     });

@@ -6,6 +6,8 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 import { FirebaseX } from '@ionic-native/firebase-x/ngx';
 import { Platform } from '@ionic/angular';
+import { firstValueFrom } from 'rxjs';
+
 
 
 
@@ -87,136 +89,128 @@ export class HomePage implements OnInit {
       
     }
   }
+async signUp() {
+  this.loadingRegister = true;
 
-  async signUp() {
-      this.loadingRegister = true;
-    // Validasi field umum
-    if (!this.username || !this.nama || !this.email || !this.phone || !this.role || !this.password) {
-      alert('Semua field wajib diisi!');
-      this.loadingRegister = false; 
+  // Validasi field umum
+  if (!this.username || !this.nama || !this.email || !this.phone || !this.role || !this.password) {
+    alert('Semua field wajib diisi!');
+    this.loadingRegister = false;
+    return;
+  }
+
+  // Validasi khusus untuk driver
+  if (this.role === 'driver') {
+    if (!this.tipeKendaraan || !this.merek || !this.warnaKendaraan || !this.noPlat) {
+      alert('Informasi kendaraan harus diisi lengkap!');
+      this.loadingRegister = false;
       return;
     }
+  }
 
-    // Validasi khusus untuk driver
-    if (this.role === 'driver') {
-      if (!this.tipeKendaraan || !this.merek|| !this.warnaKendaraan || !this.noPlat) {
-        alert('Informasi kendaraan harus diisi lengkap!');
-        this.loadingRegister = false;
-        return;
-        
-      }
-    }
+  // Format huruf besar
+  this.nama = this.nama.toUpperCase();
+  this.tipeKendaraan = this.tipeKendaraan.toUpperCase();
+  this.merek = this.merek.toUpperCase();
+  this.noPlat = this.noPlat.toUpperCase();
+  this.warnaKendaraan = this.warnaKendaraan.toUpperCase();
 
-    // Data yang akan dikirim ke backend
-    let userData = {
-      username: this.username,
-      nama: this.nama,
-      email: this.email,
-      phone: this.phone,
-      role: this.role,
-      password: this.password
-    };
+  // Buat object data user
+  const userData: any = {
+    username: this.username,
+    nama: this.nama,
+    email: this.email,
+    phone: this.phone,
+    role: this.role,
+    password: this.password
+  };
 
-    // Tambahkan data driver jika role-nya driver
-    if (this.role === 'driver') {
-      Object.assign(userData, {
-        tipeKendaraan: this.tipeKendaraan,
-        merek: this.merek,
-        warnaKendaraan: this.warnaKendaraan,
-        noPlat: this.noPlat
-      });
-    }
-    
-    try {
-    this.nama = this.nama.toUpperCase();
-    this.tipeKendaraan = this.tipeKendaraan.toUpperCase();
-    this.merek = this.merek.toUpperCase();
-    this.noPlat = this.noPlat.toUpperCase();
-    this.warnaKendaraan = this.warnaKendaraan.toUpperCase();
+  // Tambahkan data kendaraan kalau role driver
+  if (this.role === 'driver') {
+    Object.assign(userData, {
+      tipeKendaraan: this.tipeKendaraan,
+      merek: this.merek,
+      warnaKendaraan: this.warnaKendaraan,
+      noPlat: this.noPlat
+    });
+  }
 
-
-    
-     const response = await this.authService.register(
-        this.username,
-        this.nama,
-        this.email,
-        this.password,
-        this.phone,
-        this.role,
-        this.tipeKendaraan,
-        this.merek,
-        this.warnaKendaraan,
-        this.noPlat
-      );
+  try {
+    // Panggil register dari AuthService
+    const response = await firstValueFrom(this.authService.register(userData));
 
     console.log('Data pendaftaran:', userData);
-    
 
-    // Arahkan ke verifycode dengan email sebagai parameter
+    // Arahkan ke halaman verifikasi
     this.router.navigate(['/verifycode'], {
       queryParams: { email: this.email }
     });
-    } catch (error:any) {
-     
-      console.log('Gagal Daftar:', error);
 
-      if (error?.error?.message) {
-      alert(error.error.message);  // ini munculin "Domain email tidak valid." ke user
-      } else {
-        alert('Terjadi kesalahan saat registrasi.');
-      }
-      
+  } catch (error: any) {
+    console.log('Gagal Daftar:', error);
+
+    if (error?.error?.message) {
+      alert(error.error.message);  // seperti: "Domain email tidak valid"
+    } else {
+      alert('Terjadi kesalahan saat registrasi.');
     }
-    
-    this.loadingRegister = false;
 
+  } finally {
+    this.loadingRegister = false;
   }
+}
+
+  
 
   // Fungsi login yang memungkinkan login menggunakan username, email, atau no.hp
   async login() {
-    this.loadingLogin = true;
-  
-    if (!this.loginInput || !this.password) {
-      this.loadingLogin = false;
-      alert('Isi semua data login');
-      return;
-    }
-  
-    try {
-      const response = await this.authService.login(this.loginInput, this.password);
-      console.log('Login sukses:', response);
-  
-      let token = '';
+  this.loadingLogin = true;
 
-      if (this.platform.is('cordova')) {
-        const fetchedToken = await this.firebaseX.getToken();
-        if (fetchedToken) {
-          token = fetchedToken;
-          console.log('Token FCM:', token);
-          await this.authService.saveFcmToken(response.user.id, token);
-        } else {
-          console.warn('⚠️ Token FCM null');
-        }
-      } else {
-        console.log('ℹ️ Bukan di device, skip ambil token FCM');
-      }
-
-  
-      // ✅ Arahkan sesuai role
-      const role = response.user.role;
-      if (role === 'driver') {
-        this.router.navigate(['/menudriver']);
-      } else {
-        this.router.navigate(['/beranda']);
-      }
-  
-    } catch (error: any) {
-      alert(error.message || 'Login gagal');
-      console.error('❌ Login gagal:', error);
-    } finally {
-      this.loadingLogin = false;
-    }
+  if (!this.loginInput || !this.password) {
+    this.loadingLogin = false;
+    alert('Isi semua data login');
+    return;
   }
+
+  try {
+    // Ambil response dari login Observable
+    const response = await firstValueFrom(
+      this.authService.login(this.loginInput, this.password)
+    );
+
+    console.log('Login sukses:', response);
+
+    let token = '';
+
+    if (this.platform.is('cordova')) {
+      const fetchedToken = await this.firebaseX.getToken();
+      if (fetchedToken) {
+        token = fetchedToken;
+        console.log('Token FCM:', token);
+        await firstValueFrom(this.authService.saveFcmToken(response.user.id, token));
+      } else {
+        console.warn('⚠️ Token FCM null');
+      }
+    } else {
+      console.log('ℹ️ Bukan di device, skip ambil token FCM');
+    }
+
+    // Arahkan sesuai role
+    const role = response.user.role;
+    if (role === 'driver') {
+      this.router.navigate(['/menudriver']);
+    } else {
+      this.router.navigate(['/beranda']);
+    }
+
+  } catch (error: any) {
+    alert(error.message || 'Login gagal');
+    console.error('❌ Login gagal:', error);
+  } finally {
+    this.loadingLogin = false;
+  }
+}
+
   
   
   

@@ -41,12 +41,7 @@ export class JemputpenumpangPage implements OnInit {
   orderId: number = 0;
   customerPhoto: string | null = null;
   customer: any = {}; // ⬅️ Tambahkan ini di atas constructor
-  
-
-
-
-
-  
+ private lokasiInterval: any;
 
 
   constructor(
@@ -54,7 +49,8 @@ export class JemputpenumpangPage implements OnInit {
     private router: Router, 
     private routeService : RouteService,
     private firebaseLocation : FirebaseLocationService,
-    private orderService : OrderService
+    private orderService : OrderService,
+    
   ) {}
 
   ngOnInit() {
@@ -90,15 +86,34 @@ ngAfterViewInit() {
   }, 300);
 }
 
+ngOnDestroy() {
+  if (this.lokasiInterval) {
+    clearInterval(this.lokasiInterval);
+    this.lokasiInterval = null;
+  }
+
+  if (this.map) {
+    this.map.remove();
+    this.map = null;
+  }
+}
+
 
 
   async initMap(retry = 0) {
   try {
+    // ❗ Hindari error: Map container is already initialized
+    if (this.map) {
+      this.map.remove();
+      this.map = null;
+    }
+
     this.map = L.map('map-jemput-penumpang').setView([this.pickupLat, this.pickupLng], 15);
     L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '© OpenStreetMap contributors'
     }).addTo(this.map);
 
+    // Marker customer
     this.customerMarker = L.marker([this.pickupLat, this.pickupLng], {
       icon: L.icon({
         iconUrl: 'https://cdn-icons-png.flaticon.com/512/149/149059.png',
@@ -107,7 +122,7 @@ ngAfterViewInit() {
       })
     }).addTo(this.map).bindPopup('Titik Jemput Customer');
 
-    // ✅ Ambil lokasi driver
+    // Ambil lokasi driver
     const pos = await Geolocation.getCurrentPosition({
       enableHighAccuracy: true,
       timeout: 20000,
@@ -125,6 +140,7 @@ ngAfterViewInit() {
       })
     }).addTo(this.map).bindPopup('Posisi Anda');
 
+    // Tampilkan rute
     this.routeService.getRoute(driverLng, driverLat, this.pickupLng, this.pickupLat).subscribe({
       next: (res) => {
         const geojsonRoute = res.features?.[0];
@@ -139,16 +155,19 @@ ngAfterViewInit() {
     });
 
     setTimeout(() => this.map.invalidateSize(), 300);
+
     this.startRealtimeLocationUpdate();
+
   } catch (err) {
     console.error(`❌ Gagal ambil lokasi driver (percobaan ke-${retry + 1}):`, err);
     if (retry < 2) {
-      setTimeout(() => this.initMap(retry + 1), 3000); // retry setelah 3 detik
+      setTimeout(() => this.initMap(retry + 1), 3000); // coba ulang max 3x
     } else {
       alert('Gagal mendapatkan lokasi. Pastikan GPS aktif dan izin lokasi diberikan.');
     }
   }
 }
+
 
 
   
@@ -188,7 +207,8 @@ ngAfterViewInit() {
   startRealtimeLocationUpdate() {
   const orderId = +this.route.snapshot.queryParams['orderId'];
 
-  setInterval(async () => {
+  this.lokasiInterval = setInterval(async () => {
+
     try {
       const position = await Geolocation.getCurrentPosition({
         enableHighAccuracy: true,

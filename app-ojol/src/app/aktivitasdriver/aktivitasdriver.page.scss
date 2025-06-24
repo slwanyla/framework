@@ -152,7 +152,10 @@ ion-content {
         border-radius: 15px;
         font-size: 12px;
       }
+
     }
+
+  
 
     .card-body {
       display: flex;
@@ -184,6 +187,18 @@ ion-content {
       }
     }
   }
+
+   .kosong-riwayat {
+        background: #fff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        font-size: 14px;
+        color: #555;
+        margin: 0 0 15px;
+      }
+      
 }
 
 ion-footer {

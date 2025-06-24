@@ -1,11 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { environment } from 'src/environments/environment'; 
+import { environment } from 'src/environments/environment';
+import { Observable } from 'rxjs';
 
-
-
-// Define interfaces for better type safety
 interface ApiResponse {
   success: boolean;
   message: string;
@@ -25,159 +23,98 @@ interface VerifyResponse extends ApiResponse {
   providedIn: 'root'
 })
 export class AuthService {
-  constructor(private router: Router) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
-  // LOGIN
-  async login(login: string, password: string) {
-    const response = await fetch('http://127.0.0.1:8000/api/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ login, password })
-    });
-
-    const data = await response.json();
-    if (!response.ok) throw new Error(data.message || 'Login gagal');
-
-    localStorage.setItem('token', data.token);
-    localStorage.setItem('role', data.user.role);
-    localStorage.setItem('user_id', data.user.id.toString());
-    
-    
-
-    return data;
-  }
-
-  // REGISTER
-  async register(
-  username: string,
-  nama:string,
-  email: string,
-  password: string,
-  phone: string,
-  role: string,
-  tipeKendaraan?: string,
-  merek?: string,
-  warnaKendaraan?: string,
-  noPlat?: string
-) {
-  const body: any = {
-    username,
-    nama,
-    email,
-    password,
-    phone,
-    role,
-  };
-
-  // Tambahkan data kendaraan jika role driver
-  if (role === 'driver') {
-    body.tipeKendaraan = tipeKendaraan;
-    body.merek = merek;
-    body.warnaKendaraan = warnaKendaraan;
-    body.noPlat = noPlat;
-  }
-
-  const response = await fetch('http://127.0.0.1:8000/api/register', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(body),
-  });
-
-  const data = await response.json();
-
-    if (!response.ok) {
-      // Biar error bisa ditangkap dengan detail di home.page.ts
-      throw { status: response.status, error: data };
-    }
-
-    return data;
-
-}
-
-  // KIRIM ULANG OTP
-  async resendVerificationCode(email: string): Promise<ApiResponse> {
-    const response = await fetch('http://127.0.0.1:8000/api/resend-verification-code', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email })
-    });
-
-    const data = await response.json();
-    return data;
-  }
-
-  // VERIFIKASI KODE OTP
-  async verifyCode(email: string, code: string): Promise<VerifyResponse> {
-    const response = await fetch('http://127.0.0.1:8000/api/verify', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({
-        email,
-        digit1: code[0],
-        digit2: code[1],
-        digit3: code[2],
-        digit4: code[3]
-      })
-    });
-
-    const data = await response.json();
-    return data;
-  }
-
-  async saveFcmToken(userId: number, token: string, deviceType: string = 'android') {
-    const response = await fetch('http://127.0.0.1:8000/api/save-fcm-token', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({
-        user_id: userId,
-        token: token,
-        device_type: deviceType
-      })
-    });
-  
-    const data = await response.json();
-    return data;
-  }
-
-  // LOGOUT
-  async logout(): Promise<ApiResponse> {
-    const token = localStorage.getItem('token');
-    const response = await fetch('http://127.0.0.1:8000/api/logout', {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
+  private getHeaders(includeToken: boolean = false): HttpHeaders {
+    const headersConfig: any = {
+      'Content-Type': 'application/json'
+    };
+    if (includeToken) {
+      const token = localStorage.getItem('token');
+      if (token) {
+        headersConfig['Authorization'] = `Bearer ${token}`;
       }
-    });
-
-    const data = await response.json();
-    localStorage.removeItem('token');
-    return data;
+    }
+    return new HttpHeaders(headersConfig);
   }
 
-  async forgotPassword(email: string) {
-    const response = await fetch('http://127.0.0.1:8000/api/forgot-password', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify({ email })
+  // ✅ LOGIN
+  login(login: string, password: string): Observable<any> {
+    return new Observable(observer => {
+      this.http.post<any>(`${environment.apiUrl}/login`, { login, password }, {
+        headers: this.getHeaders()
+      }).subscribe({
+        next: (data) => {
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.user.role);
+          localStorage.setItem('user_id', data.user.id.toString());
+          observer.next(data);
+          observer.complete();
+        },
+        error: (err) => observer.error(err)
+      });
     });
-
-    const data = await response.json();
-    return data;
   }
-  
-  
+
+  // ✅ REGISTER
+  register(userData: any): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/register`, userData);
 }
 
+
+  // ✅ KIRIM ULANG OTP
+  resendVerificationCode(email: string): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${environment.apiUrl}/resend-verification-code`, { email }, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // ✅ VERIFIKASI KODE OTP
+  verifyCode(email: string, code: string): Observable<VerifyResponse> {
+    return this.http.post<VerifyResponse>(`${environment.apiUrl}/verify`, {
+      email,
+      digit1: code[0],
+      digit2: code[1],
+      digit3: code[2],
+      digit4: code[3]
+    }, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // ✅ SIMPAN FCM TOKEN
+  saveFcmToken(userId: number, token: string, deviceType: string = 'android'): Observable<any> {
+    return this.http.post(`${environment.apiUrl}/save-fcm-token`, {
+      user_id: userId,
+      token: token,
+      device_type: deviceType
+    }, {
+      headers: this.getHeaders()
+    });
+  }
+
+  // ✅ LOGOUT
+  logout(): Observable<ApiResponse> {
+    return new Observable(observer => {
+      this.http.post<ApiResponse>(`${environment.apiUrl}/logout`, {}, {
+        headers: this.getHeaders(true)
+      }).subscribe({
+        next: (res) => {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user_id');
+          localStorage.removeItem('role');
+          observer.next(res);
+          observer.complete();
+        },
+        error: (err) => observer.error(err)
+      });
+    });
+  }
+
+  // ✅ LUPA PASSWORD
+  forgotPassword(email: string): Observable<ApiResponse> {
+    return this.http.post<ApiResponse>(`${environment.apiUrl}/forgot-password`, { email }, {
+      headers: this.getHeaders()
+    });
+  }
+}

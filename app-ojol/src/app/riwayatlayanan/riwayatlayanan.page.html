@@ -12,22 +12,36 @@
     <div class="service-header">
       <div class="service-name">
         <strong>{{ item.nama }}</strong>
+        <div>{{ item.tanggal }}</div>
       </div>
       <div class="service-time">
         {{ item.waktu }}
       </div>
     </div>
+
     <div class="service-location">
       <ion-icon name="person-sharp"></ion-icon>
       <span>{{ item.dari }}</span>
     </div>
+
     <div class="service-location">
       <ion-icon name="location-sharp"></ion-icon>
       <span>{{ item.ke }}</span>
     </div>
+
     <div class="service-footer">
-      <span class="status">Selesai</span>
-      <span class="harga">Rp{{ item.harga }}</span>
+      <span 
+        class="status" 
+        [ngClass]="{ 
+          'text-red-500': item.status === 'dibatalkan', 
+          'text-green-600': item.status === 'selesai' 
+        }">
+        {{ item.status }}
+      </span>
+
+      <span class="harga">
+        {{ item.harga === 0 ? 'Rp0' : ('Rp' + (item.harga | number:'1.0-0')) }}
+      </span>
     </div>
   </div>
 </ion-content>

@@ -46,17 +46,9 @@
             <ion-icon name="close-outline" class="close-icon" (click)="showPaymentOptions = false"></ion-icon>
           </div>
 
-          <div class="payment-option" [class.selected]="selectedMethod === 'tunai'" (click)="selectMethod('tunai')">
-            <span>Tunai</span>
-            <ion-icon name="checkmark-outline" *ngIf="selectedMethod === 'tunai'"></ion-icon>
-          </div>
-          <div class="payment-option" [class.selected]="selectedMethod === 'transfer'" (click)="selectMethod('transfer')">
-            <span>Transfer Bank</span>
-            <ion-icon name="checkmark-outline" *ngIf="selectedMethod === 'transfer'"></ion-icon>
-          </div>
-          <div class="payment-option" [class.selected]="selectedMethod === 'ewallet'" (click)="selectMethod('ewallet')">
-            <span>E-Wallet</span>
-            <ion-icon name="checkmark-outline" *ngIf="selectedMethod === 'ewallet'"></ion-icon>
+          <div class="payment-option" [class.selected]="selectedMethod === 'Qris'" (click)="selectMethod('ewallet')">
+            <span>Qris</span>
+            <ion-icon name="checkmark-outline" *ngIf="selectedMethod === 'Qris'"></ion-icon>
           </div>
         </div>
       </div>

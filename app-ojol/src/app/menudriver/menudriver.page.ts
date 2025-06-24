@@ -9,6 +9,7 @@ import { MenudriverService  } from 'src/app/services/menudriver.service';
 import { OrderService  } from 'src/app/services/order.service';
 import { FirebaseLocationService } from '../services/firebase-location.service';
 import { interval, Subscription } from 'rxjs';
+import { HistoryService } from '../services/history.service';
 import { AlertController } from '@ionic/angular';
 
 
@@ -33,6 +34,8 @@ export class MenudriverPage implements OnInit {
   lastLng: number = 0;
   loadingLokasi = true;
   lokasiBerhasil: boolean = false;
+  riwayatTerakhir: any = null;
+
 
 
 
@@ -45,7 +48,8 @@ export class MenudriverPage implements OnInit {
     private menuDriverService: MenudriverService,
     private orderService: OrderService, 
     private firebaseLocation: FirebaseLocationService,
-    private alertCtrl: AlertController
+    private alertCtrl: AlertController,
+    private historyService : HistoryService
     
   ) {}
 
@@ -53,6 +57,7 @@ export class MenudriverPage implements OnInit {
     this.loadProfile(); // opsional di sini
     this.startPollingOrder();
     this.startRealtimeLocationUpdate(); 
+    this.ambilRiwayatTerakhir();
   }
 
   ngOnDestroy() {
@@ -309,6 +314,24 @@ async getCurrentLocation(retry = 0) {
    //   });
  // }
   
+  ambilRiwayatTerakhir() {
+  const userId = localStorage.getItem('user_id');
+  if (!userId) return;
+
+  this.historyService.riwayat(userId, 'driver')  // ✅ panggil method riwayat dengan parameter
+    .subscribe({
+      next: (res) => {
+        if (res.success && res.riwayat.length > 0) {
+          this.riwayatTerakhir = res.riwayat[0]; // ✅ hanya ambil yang terbaru
+          console.log('✅ Riwayat terakhir:', this.riwayatTerakhir);
+        }
+      },
+      error: (err) => {
+        console.error('❌ Gagal ambil riwayat terakhir:', err);
+      }
+    });
+}
+
 
  
   async tolakPermintaan() {

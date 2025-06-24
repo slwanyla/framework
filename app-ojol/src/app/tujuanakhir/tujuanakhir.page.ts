@@ -28,6 +28,7 @@ export class TujuanakhirPage implements OnInit, AfterViewInit {
   destinationAddress = '';
   jarakKeTujuan = '';
   waktuSelesai = '';
+  orderId: number = 0;
   
 
   constructor(
@@ -45,6 +46,7 @@ export class TujuanakhirPage implements OnInit, AfterViewInit {
       this.destinationLng = +params['destinationLng'] || 0;
       this.customerNama = params['nama'] || '-';
       this.destinationAddress = params['destinationAddress'] || '-';
+      this.orderId = +params['orderId'] || 0;
 
       console.log('Pickup:', this.pickupLat, this.pickupLng);
       console.log('Destination:', this.destinationLat, this.destinationLng);
@@ -124,8 +126,11 @@ export class TujuanakhirPage implements OnInit, AfterViewInit {
         this.jarakKeTujuan = totalDistanceInKm.toFixed(2);
 
         // ✅ Fit map ke rute
+        setTimeout(() => {
         const bounds = L.geoJSON(geojson).getBounds();
         this.map.fitBounds(bounds, { padding: [50, 50] });
+      }, 200); // jeda 200ms
+
       },
       error: (err) => console.error('Gagal ambil rute:', err)
     });
@@ -187,7 +192,9 @@ export class TujuanakhirPage implements OnInit, AfterViewInit {
       waktu: jamSelesai, // ⬅️ ini yang kamu maksud
       jarak: this.jarakKeTujuan,
       jarakTempuh: this.jarakKeTujuan, // ← dikirim dari perhitungan
-      waktuTempuh: jamSelesai,   
+      waktuTempuh: jamSelesai,  
+      orderId: this.orderId,
+
     }
   });
 }

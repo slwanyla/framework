@@ -64,39 +64,41 @@
     <p class="note">Update posisi terkirim otomatis ke sistem</p>
   </div>
 
-  <div class="history-card" (click)="goToRiwayat()" style="cursor: pointer;">
-    <div class="history-header">
+  <div class="history-card" *ngIf="riwayatTerakhir" (click)="goToRiwayat()" style="cursor: pointer;">
+  <div class="history-header">
     <ion-icon name="timer-outline"></ion-icon>
-      <p>Riwayat Layanan</p>
-      <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
-    </div>
-
-    <div class="history-item">
-      <div class="history-name-status">
-        <p class="name">Rifha Reinda Warich</p>
-        <p class="status">Selesai</p>
-      </div>
-
-  <div class="history-location">
-    <div class="address-text">
-      <p>
-        <ion-icon name="person-sharp"></ion-icon>
-        Perum Karaba Indah Blok R.48
-      </p>
-      <p class="destination">
-        <ion-icon name="location-sharp"></ion-icon>
-        Universitas Buana Perjuangan
-      </p>
-    </div>
+    <p>Riwayat Layanan</p>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
   </div>
 
+  <div class="history-item">
+    <div class="history-name-status">
+      <p class="name">{{ riwayatTerakhir.nama }}</p>
+      <p class="status" [ngClass]="riwayatTerakhir.status === 'dibatalkan' ? 'text-danger' : 'text-success'">
+        {{ riwayatTerakhir.status | titlecase }}
+      </p>
+    </div>
 
-      <div class="history-footer">
-        <p class="price">Rp 24.000</p>
-        <p class="time">09.00</p>
+    <div class="history-location">
+      <div class="address-text">
+        <p>
+          <ion-icon name="person-sharp"></ion-icon>
+          {{ riwayatTerakhir.dari }}
+        </p>
+        <p class="destination">
+          <ion-icon name="location-sharp"></ion-icon>
+          {{ riwayatTerakhir.ke }}
+        </p>
       </div>
     </div>
+
+    <div class="history-footer">
+      <p class="price">Rp {{ riwayatTerakhir.harga | number:'1.0-0' }}</p>
+      <p class="time">{{ riwayatTerakhir.waktu }}</p>
+    </div>
   </div>
+</div>
+
 
 
   <ion-footer>

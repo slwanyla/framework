@@ -2,14 +2,14 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory; // ✅ TAMBAHKAN INI
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Sanctum\HasApiTokens;
 
-
-
 class Order extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
         'customer_id',
         'driver_id',
@@ -28,9 +28,14 @@ class Order extends Model
         'bukti_transaksi',
         'alasan_batal',
         'dibatalkan_oleh',
-        'canceled_at'
+        'canceled_at',
     ];
-    
+
+    // ✅ Casting ke Carbon instance
+    protected $casts = [
+        'waktu_selesai' => 'datetime',
+        'canceled_at' => 'datetime',
+    ];
 
     public function driver()
     {
@@ -40,9 +45,10 @@ class Order extends Model
     public function customer()
     {
         return $this->belongsTo(User::class, 'customer_id');
-    }  
+    }
 
-    public function driverCandidates() {
+    public function driverCandidates()
+    {
         return $this->hasMany(OrderDriverCandidate::class, 'order_id');
     }
 
@@ -50,5 +56,4 @@ class Order extends Model
     {
         return $this->hasOne(Payment::class);
     }
-    
 }

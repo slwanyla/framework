@@ -65,7 +65,9 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/order/terima', [OrderController::class, 'terimaOrder']);
     Route::get('/order/{id}/driver', [DriverController::class, 'getDriverByOrder']);
     Route::post('/perjalanan/update-status', [OrderController::class, 'updatePerjalanan']);
-    Route::get('/riwayat-layanan/{driverId}', [OrderController::class, 'riwayatLayanan']);
+    Route::get('/detail-order/{id}', [HistoryController::class, 'show']);
+    
+
 
     
     Route::post('/proxy-ors', [RouteController::class, 'proxyToORS']);
@@ -87,8 +89,8 @@ Route::middleware('auth:sanctum')->group(function () {
    
 
     Route::post('/beranda', [BerandaController::class, 'GetLocation']);
-    Route::get('/riwayat-pesanan/{id}', [HistoryController::class, 'riwayatLayanan']);
-    Route::get('/riwayat-pesanan/{id}', [HistoryController::class, 'riwayatCustomer']);
+    Route::get('/riwayat-driver/{id}', [HistoryController::class, 'riwayatLayanan']);
+    Route::get('/riwayat-customer/{id}', [HistoryController::class, 'riwayatCustomer']);
     
 
     Route::post('/logout', [LogoutController::class, 'logout']);

@@ -62,6 +62,10 @@ export class OrderService {
   });
 }
 
-  
-
+  getDetailOrder(orderId: number): Observable<any> {
+  return this.http.get(`${environment.apiUrl}/detail-order/${orderId}`, {
+    headers: this.getHeaders()
+  });
+}
+ 
 }

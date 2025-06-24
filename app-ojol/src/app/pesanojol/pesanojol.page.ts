@@ -269,11 +269,14 @@ if (this.map) {
     jemput_latitude: this.pickupPoint.lat,
     jemput_longitude: this.pickupPoint.lng,
     tujuan_latitude: this.destinationPoint.lat,
-    tujuan_longitude: this.destinationPoint.lng
+    tujuan_longitude: this.destinationPoint.lng,
+    tipe_kendaraan: this.jenisKendaraan 
   }).subscribe(res => {
     console.log('✅ Estimasi tarif:', res.estimasi_tarif);
     console.log('✅ Jarak:', res.jarak_km);
     console.log('✅ Driver terdekat:', res.driver_terdekat);
+    console.log('Tipe kendaraan yang dikirim:', this.jenisKendaraan);
+
 
     this.estimasiTarif = res.estimasi_tarif;
     this.biayaAdmin = res.biaya_admin;
@@ -303,7 +306,8 @@ if (this.map) {
   jemput_latitude: this.pickupPoint.lat,
   jemput_longitude: this.pickupPoint.lng,
   tujuan_latitude: this.destinationPoint.lat,
-  tujuan_longitude: this.destinationPoint.lng
+  tujuan_longitude: this.destinationPoint.lng,
+  tipe_kendaraan: this.jenisKendaraan 
 }).subscribe(res => {
   this.estimasiTarif = res.estimasi_tarif;
   this.biayaAdmin = res.biaya_admin;

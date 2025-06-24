@@ -33,27 +33,32 @@
 <!-- Riwayat Layanan -->
   <div class="history-section">
     <h4>Riwayat Layanan</h4>
-    <div *ngFor="let riwayat of [1,2,3]">
+    <ng-container *ngIf="riwayatLayanan.length > 0; else kosong">
+    <div *ngFor="let riwayat of riwayatLayanan">
       <ion-card class="history-card">
         <ion-card-content>
           <div class="card-header">
-            <b>Riffa Reinda Warich</b>
-            <span class="status">Selesai</span>
+            <b>{{ riwayat.nama }}</b>
+            <span class="status">{{ riwayat.status }}</span>
           </div>
           <div class="card-body">
             <ion-icon name="location-sharp"></ion-icon>
             <div class="alamat">
-              <p>Perum Karaba Indah Blok R.48</p>
-              <p>Universitas Buana Perjuangan</p>
+              <p>{{ riwayat.dari }}</p>
+              <p>{{ riwayat.ke }}</p>
             </div>
             <div class="detail">
-              <p><b>Rp 24.000</b></p>
-              <p>09.00</p>
+              <p><b>Rp {{ riwayat.harga | number:'1.0-0' }}</b></p>
+              <p>{{ riwayat.waktu }}</p>
             </div>
           </div>
         </ion-card-content>
       </ion-card>
     </div>
+     </ng-container>
+    <ng-template #kosong>
+      <p class="kosong-riwayat">Tidak ada riwayat untuk filter <b>{{ selectedFilter }}</b>.</p>
+    </ng-template>
   </div>
 </ion-content>
 

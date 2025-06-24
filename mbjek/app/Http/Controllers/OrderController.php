@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Order;
 use App\Models\User;
 use App\Models\Driver;
+use App\Models\Tarif;
 use App\Models\FcmToken;
 use App\Models\OrderDriverCandidate;
 use Midtrans\Snap;
@@ -17,29 +18,34 @@ use Midtrans\Config;
 class OrderController extends Controller
 {
     // ✅ Hitung tarif berdasarkan jarak
-    private function hitungTarif($jarak)
-    {
-        $tarifDasar = 5000;
-        $tarifPerKm = 2000;
-        $biayaAdmin = 4000;
+    private function hitungTarif($jarak, $tipeKendaraan)
+{
+    $konfigurasiTarif = \App\Models\Tarif::where('jenis_kendaraan', $tipeKendaraan)->first();
 
-        if ($jarak <= 1) {
-        $tarif = $tarifDasar;
-    } else {
-        $tarif = $tarifDasar + (($jarak - 1) * $tarifPerKm);
+    if (!$konfigurasiTarif) {
+        throw new \Exception('Tarif belum dikonfigurasi oleh admin untuk kendaraan ' . $tipeKendaraan);
     }
 
-    $pajak = round(($tarif + $biayaAdmin) * 0.1);
+    $tarifDasar   = $konfigurasiTarif->tarif_minimum ?? 0;
+    $tarifPerKm   = $konfigurasiTarif->tarif_per_km ?? 0;
+    $biayaAdmin   = $konfigurasiTarif->biaya_tambahan ?? 0;
+    $pajakPersen  = 10; // default jika belum disimpan di DB
+
+    $tarif = ($jarak <= 1)
+        ? $tarifDasar
+        : $tarifDasar + (($jarak - 1) * $tarifPerKm);
+
+    $pajak = round(($tarif + $biayaAdmin) * ($pajakPersen / 100));
     $total = $tarif + $biayaAdmin + $pajak;
 
-      return [
-        'tarif' => round($tarif),
-        'biaya_admin' => $biayaAdmin,
-        'pajak' => $pajak,
-        'total' => $total
+    return [
+        'tarif'        => round($tarif),
+        'biaya_admin'  => $biayaAdmin,
+        'pajak'        => $pajak,
+        'total' => round($total, -3),
     ];
+}
 
-    }
 
     // ✅ Hitung jarak manual (haversine)
     private function hitungJarak($lat1, $lng1, $lat2, $lng2)
@@ -87,6 +93,7 @@ class OrderController extends Controller
     $jemputLng = $request->jemput_longitude;
     $tujuanLat = $request->tujuan_latitude;
     $tujuanLng = $request->tujuan_longitude;
+    
 
     try {
         $jarak = $this->hitungJarakORS($jemputLat, $jemputLng, $tujuanLat, $tujuanLng);
@@ -94,7 +101,8 @@ class OrderController extends Controller
         return response()->json(['error' => 'Gagal menghitung jarak: ' . $e->getMessage()], 500);
     }
 
-    $tarifData = $this->hitungTarif($jarak);
+    $tarifData = $this->hitungTarif($jarak, $request->tipe_kendaraan);
+
 
     // ✅ Ambil daftar driver terdekat
     $drivers = User::where('role', 'driver')
@@ -169,7 +177,8 @@ public function buatOrder(Request $request)
         ], 500);
     }
 
-    $tarifData = $this->hitungTarif($jarak);
+    $tarifData = $this->hitungTarif($jarak, $request->tipe_kendaraan);
+
 
     $order = Order::create([
         'customer_id' => auth()->id(),
