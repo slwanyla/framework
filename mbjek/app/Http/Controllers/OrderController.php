@@ -510,8 +510,11 @@ public function getOrderTerbaru(Request $request)
 
          if ($request->status === 'selesai') {
             $order->waktu_selesai = now(); 
+             
+         // 💰 Bagi hasil otomatis
+            $penghasilanDriver = round($order->tarif * 0.8); // 80% untuk driver
+            $order->penghasilan_driver = $penghasilanDriver;
         }
-
         $order->save();
 
         \DB::table('order_status_logs')->insert([
