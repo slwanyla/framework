@@ -1,0 +1,146 @@
+.content-background {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #ffffff;
+  height: 100%;
+}
+
+.card {
+  text-align: center;
+  background: #fff;
+  padding: 20px;
+  border-radius: 20px;
+  width: 100%;
+  height: 100%;
+  max-height: 900px;
+  max-width: 900px;
+}
+
+.illustration {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  display: block;
+  font-size: 55px;
+}
+
+.title {
+  font-size: 23px;
+  font-weight: 600;
+  color: #0b1441;
+  margin-bottom: 10px;
+  margin-top: 60px;
+}
+
+.description {
+  font-size: 16px;
+  color: #000;
+  margin-bottom: 20px;
+}
+
+.cancel-button {
+  font-size: 16px;
+  --border-radius: 15px;
+  --color: #192559;
+  --border-color: #000;
+  font-weight: 550;
+  margin-top: 140px;
+  margin-left: 50px;
+  width: 250px; 
+  border: none;
+  background-color: #ffffff;
+  border-radius: 15px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0.1, 0.1, 0.1, 0.3);
+}
+
+.cancel-button:hover {
+  background-color: #192559;
+  color: #ffffff; 
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+}
+
+.driver-list-terdekat {
+  margin-top: 30px;
+  padding: 10px;
+  border-top: 1px solid #ccc;
+}
+
+.driver-card {
+  display: flex;
+  align-items: center;
+  background: #f9f9f9;
+  border-radius: 12px;
+  padding: 15px;
+  margin-bottom: 12px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  transition: all 0.3s ease;
+}
+
+.driver-card:hover {
+  transform: scale(1.01);
+  background: #eef3ff;
+}
+
+.driver-icon {
+  font-size: 26px;
+  color: #384eff;
+  margin-right: 12px;
+}
+
+.driver-detail {
+  flex-grow: 1;
+}
+
+.driver-photo {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  overflow: hidden;
+  margin-right: 10px;
+  border: 2px solid #ccc;
+}
+
+.driver-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+
+.nama {
+  font-weight: 600;
+  font-size: 16px;
+  color: #222;
+}
+
+.kendaraan, .plat {
+  font-size: 14px;
+  color: #555;
+}
+
+.driver-status {
+  font-weight: bold;
+  padding: 4px 8px;
+  border-radius: 4px;
+  text-align: center;
+  min-width: 80px;
+  display: inline-block;
+}
+
+.status-menunggu {
+  background-color: #fff3cd;
+  color: #856404;
+}
+
+.status-diterima {
+  background-color: #d4edda;
+  color: #155724;
+}
+
+.status-ditolak {
+  background-color: #f8d7da;
+  color: #721c24;
+}

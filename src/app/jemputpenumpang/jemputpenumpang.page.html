@@ -1,0 +1,25 @@
+<ion-content>
+  <div class="map-wrapper">
+    <div id="map-jemput-penumpang"></div>
+  </div>
+
+  <div class="customer-card">
+    <ion-icon name="chatbubble-ellipses-outline" class="chat-icon" (click)="bukaChat()"></ion-icon>
+    <div class="customer-info">
+      <div class="profile-pic">
+        <div class="customer-photo"
+     [style.backgroundImage]="'url(' + (customerPhoto ? + customerPhoto : 'assets/img/default-user.png') + ')'"></div>
+      </div>
+      <div class="name">{{ customerNama }}</div>
+    </div>
+    <p *ngIf="distanceToCustomer" class="jarak-info">Jarak ke customer: {{ distanceToCustomer }}</p>
+    <div class="address-section">
+      <div class="alamat-item"><ion-icon name="location-sharp"></ion-icon> <span>{{ alamatJemput }}</span></div>
+      <div class="alamat-item"><ion-icon name="flag-sharp"></ion-icon> <span>{{ alamatTujuan }}</span></div>
+    </div>
+    <div class="total-section">
+      <span>Total</span> <span class="harga">Rp {{ totalHarga | number:'1.0-0' }}</span>
+    </div>
+    <ion-button expand="block" class="menuju-btn" fill="solid" (click)="menujuCustomer()"> Customer Naik </ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,133 @@
+<ion-content class="aktivitas-container">
+  <div class="header-card">
+    <div class="header-top">
+      <div class="logo-wrapper">
+        <img src="assets/logo-jek.png" class="logo" alt="MBJEK" />
+        <ion-icon name="download-outline" class="download-icon" (click)="downloadStrukPDF()"></ion-icon>
+      </div>
+      <h2 class="judul">Aktivitas Anda.</h2>
+    </div>
+    <ion-segment value="riwayat">
+      <ion-segment-button value="riwayat">
+        <ion-label>Riwayat</ion-label> 
+      </ion-segment-button>
+    </ion-segment>
+    
+    <!-- FILTER ROW -->
+    <div class="filter-row">
+      <ion-button shape="round" fill="solid" size="small" color="light" (click)="selectKendaraan('motor')">Motor</ion-button>
+      <ion-button shape="round" fill="solid" size="small" color="light" (click)="selectKendaraan('mobil')">Mobil</ion-button>
+      <ion-button shape="round" fill="outline" size="small" color="light" (click)="openModal()">
+        {{ selectedStatus || 'Status' }}
+        <ion-icon name="chevron-down-outline" slot="end"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+  
+  <!-- RIWAYAT -->
+  <div class="history-card" *ngFor="let item of filteredAktivitas">
+    <div class="info-row">
+      <span class="date">{{ item.tanggal }}</span>
+      <span class="price">Rp.{{ item.harga || '0' }}</span>
+    </div>
+    <div class="content">
+      <div class="icon-placeholder"></div>
+      <div>
+        <h3>{{ item.deskripsi }}</h3>
+        <p [ngClass]="{
+            'status': true,
+            'success': item.status === 'selesai',
+            'cancelled': item.status === 'dibatalkan'
+          }">
+          <ion-icon [name]="item.status === 'selesai' ? 'checkmark-circle' : 'close-circle'"></ion-icon>
+          Perjalanan {{ item.status }}
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- STATUS MODAL -->
+  <ion-modal [isOpen]="showModal" (didDismiss)="closeModal()" class="filter-modal">
+    <ng-template>
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3 class="modal-title">Status transaksi</h3>
+          <ion-icon name="close" class="close-icon" (click)="closeModal()"></ion-icon>
+        </div>
+        
+        <div class="status-options">
+          <div class="status-option">
+            <span>Selesai</span>
+            <label class="radio-container">
+              <input type="radio" name="status" [checked]="selectedStatus === 'selesai'" (click)="selectStatus('selesai')">
+              <span class="checkmark complete"></span>
+            </label>
+          </div>
+          
+          <div class="status-option">
+            <span>Tidak Selesai</span>
+            <label class="radio-container">
+              <input type="radio" name="status" [checked]="selectedStatus === 'dibatalkan'" (click)="selectStatus('dibatalkan')">
+              <span class="checkmark"></span>
+            </label>
+          </div>
+        </div>
+        
+        <div class="button-row">
+          <button class="reset-btn" (click)="resetFilter()">Reset</button>
+          <button class="apply-btn" (click)="applyFilter()">Terapkan</button>
+        </div>
+      </div>
+    </ng-template>
+  </ion-modal>
+
+  <!-- STRUK PDF (DISKET SAAT PRINT) -->
+  <!-- STRUK PDF (DISKET SAAT PRINT) -->
+<div id="struk-pdf" style="width:300px; padding:20px; display:none; background:white; color:black">
+  <h3 style="text-align:center;">MBJEK - Struk Pemesanan</h3>
+  <div *ngFor="let item of filteredAktivitas">
+    <hr />
+    <p><strong>Tanggal:</strong> {{ item.tanggal }}</p>
+    <p><strong>Status:</strong> {{ item.status }}</p>
+    <p><strong>Deskripsi:</strong> {{ item.deskripsi }}</p>
+    <p><strong>Harga:</strong> Rp {{ item.harga }}</p>
+    <p><strong>Kendaraan:</strong> {{ item.kendaraan }}</p>
+    <p><strong>Metode Pembayaran:</strong> {{ item.metode_pembayaran }}</p>
+
+    <!-- ✅ Kalau ada data driver -->
+    <div *ngIf="item.driver">
+      <p><strong>Driver:</strong> {{ item.driver.nama }} ({{ item.driver.plat }})</p>
+    </div>
+
+    <!-- ✅ Jika ada bukti transaksi (misalnya QR) -->
+    <div *ngIf="item.bukti_transaksi">
+      <p><strong>Bukti Transaksi:</strong></p>
+      <img [src]="item.bukti_transaksi" style="width:100%; max-height:150px; object-fit:contain" />
+    </div>
+
+    <!-- ✅ Tampilkan catatan tambahan jika dibatalkan -->
+    <div *ngIf="item.status === 'dibatalkan'">
+      <p style="color:red;"><em>*Order ini dibatalkan.</em></p>
+    </div>
+  </div>
+  <hr />
+  <p style="text-align:center;">Terima kasih telah menggunakan MBJEK!</p>
+</div>
+</ion-content>
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" (click)="goToPage('/beranda')">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Beranda</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="aktivitas" (click)="goToPage('/aktivitas')">
+      <ion-icon name="list-outline"></ion-icon>
+      <ion-label>Aktivitas</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="setting" (click)="goToPage('/profilku')">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Setting</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

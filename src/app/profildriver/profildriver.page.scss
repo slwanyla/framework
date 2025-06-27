@@ -1,0 +1,141 @@
+.profil-content {
+  --background: #fff;
+  text-align: center;
+  padding: 0;
+}
+
+.header-custom {
+  background: #192559;
+  height: 130px;
+  border-bottom-left-radius: 50px;
+  border-bottom-right-radius: 50px;
+  position: relative;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 20px 0;
+  color: #fff;
+}
+
+.back-section {
+  display: flex;
+  align-items: center;
+}
+
+.back-icon {
+  font-size: 20px;
+  margin-right: 6px;
+}
+
+.header-title {
+  font-size: 18px;
+  font-weight: 540;
+  margin-left: 16px;
+  margin-top: 2px;
+}
+
+.edit-icon {
+  font-size: 20px;
+  margin-right: 15px;
+  margin-top: 25px;
+}
+
+.profile-pic {
+  width: 80px;
+  height: 80px;
+  background: #c4c4c4;
+  border-radius: 50%;
+  border: 3px solid #c4c4c4;
+  position: absolute;
+  margin-top: 30px;
+  bottom: -40px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.profile-detail {
+  margin-top: 50px;
+}
+
+.avatar-img,
+.default-avatar {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.nama-driver {
+  margin: 8px 0 4px;
+  font-weight: 600;
+  font-size: 20px;
+  color: #192559;
+}
+
+.status-driver {
+  margin: 0;
+  font-weight: 545;
+  color: #000;
+  font-size: 14px;
+}
+
+.rating {
+  font-size: 13px;
+  font-weight: 545;
+  color: #000;
+  margin: 6px 0;
+}
+
+.section-divider {
+  border: none;
+  height: 2px;
+  background-color: #888;
+  margin: 12px 0 20px 0;
+  width: 100vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.star-icon {
+  color: #000;
+  vertical-align: middle;
+  margin-right: 2px;
+}
+
+.form-box {
+  margin-top: 10px;
+  padding: 0 5vw 30px; // padding kiri-kanan fleksibel
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 500px;    // batasi lebar maksimal
+  width: 100%;          // fleksibel mengikuti layar
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.form-row {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.form-row label {
+  font-weight: 550;
+  font-size: 15px;
+  margin-bottom: 4px;
+}
+
+.form-row input {
+  width: 100%;
+  border: 1.6px solid #192559;
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 14px;
+  box-sizing: border-box;
+}

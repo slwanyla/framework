@@ -1,0 +1,213 @@
+.selesai-page {
+  --background: #f5f0e6;
+  position: relative;
+
+  .page-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+  }
+
+  .header {
+    flex-shrink: 0;
+    background: #192559;
+    color: #fff;
+    padding: 10px 10px;
+    text-align: center;
+    border-radius: 0 0 30px 30px;
+
+    h2 {
+      font-size: 19px;
+      font-weight: 550;
+      margin-bottom: 6px;
+      margin-top: 5px;
+    }
+
+    p {
+      font-size: 15px;
+    }
+  }
+
+  .card {
+    flex-grow: 1; // ✨ Kunci agar mengisi ruang antara header dan footer
+    background: #fff;
+    padding: 15px;
+    margin: 0 25px;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .driver-info {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px;
+
+    .avatar {
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      background: #fff;
+      margin-right: 12px;
+      background-size: cover;
+      background-position: center;
+    }
+
+    .details {
+      flex-grow: 1;
+      font-size: 14px;
+
+      .data-driver{
+        font-size: 12px;
+        color: #666;
+        margin-top: 2px;
+      }
+    }
+
+    .chat-icon {
+      font-size: 22px;
+      color: #333;
+    }
+  }
+
+  .section {
+    margin-top: -2px;
+
+    h4 {
+      font-size: 17px;
+      font-weight: 550;
+      margin-bottom: 8px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: flex-start;
+      margin-bottom: 10px;
+
+      ion-icon {
+        margin-right: 10px;
+        font-size: 15px;
+        margin-top: 4px;
+      }
+
+      span {
+        font-size: 16px;
+
+        b {
+          font-weight: 550;
+        }
+      }
+    }
+
+    .row-2 {
+      display: flex;
+      justify-content: space-between;
+      font-size: 13px;
+      margin-top: 10px;
+
+      .info-box {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+
+        .label {
+          font-size: 15px;
+          color: #000;
+          margin-bottom: 2px;
+        }
+
+        div {
+          display: flex;
+          align-items: center;
+
+          ion-icon {
+            margin-right: 10px;
+          }
+        }
+      }
+    }
+
+    &.biaya {
+      font-size: 15px;
+
+      .row-between {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 4px;
+      }
+
+      .separator-line {
+        height: 1.5px;
+        background-color: #000;
+        margin: 12px 0;
+        border-radius: 2px;
+      }
+
+      .total {
+        font-weight: bold;
+      }
+
+      small {
+        color: #888;
+        font-size: 13px;
+      }
+    }
+
+    .paid {
+      font-size: 12px;
+      color: #888;
+      margin-top: -8px;
+      text-align: right;
+    }
+  }
+
+  .pembayaran-row {
+    .pembayaran-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h4 {
+        font-size: 17px;
+        font-weight: 550;
+        margin: 0;
+        margin-top: 20px;
+      }
+
+      .qris-box {
+        background: #f1f4ff;
+        color: #192559;
+        font-weight: bold;
+        font-size: 14px;
+        padding: 6px 14px;
+        border-radius: 8px;
+      }
+    }
+  }
+
+  .btn-selesai {
+    margin: 20px;
+    margin-top: 35px;
+    --background: #192559;
+    --border-radius: 13px;
+    font-weight: bold;
+  }
+}
+
+// Footer tetap di bawah
+ion-footer.selesai-footer {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 80px;
+  background: transparent;
+  z-index: 10;
+
+  .footer-box {
+    background: #192559;
+    height: 100%;
+    border-top-left-radius: 45px;
+    border-top-right-radius: 45px;
+  }
+}

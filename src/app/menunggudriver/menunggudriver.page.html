@@ -1,0 +1,40 @@
+<ion-content class="ion-padding content-background">
+  <div class="card">
+    <img src="assets/nunggu-driver.jpg" alt="Menunggu Driver" class="illustration">
+    <h2 class="title">MENUNGGU DRIVER</h2>
+    <p class="description">Mohon tunggu, sedang mencari<br>driver terdekat untuk Anda.</p>
+
+    <div class="driver-list-terdekat" *ngIf="driverList.length > 0">
+      <h3>Driver Terdekat</h3>
+      <div *ngFor="let driver of driverList" class="driver-card">
+        <div class="driver-photo">
+          <img *ngIf="driver.photo; else defaultFoto" [src]="driver.photo" alt="Driver Photo" />
+          <ng-template #defaultFoto>
+            <img src="assets/default-avatar.png" alt="Default Driver" />
+          </ng-template>
+        </div>
+        <div class="driver-detail">
+          <div class="nama">{{ driver.nama }}</div>
+          <div class="kendaraan">{{ driver.merek }} - {{ driver.warna }}</div>
+          <div class="plat">{{ driver.plat_nomor }}</div>
+        </div>
+        <div class="driver-status" [ngClass]="{
+          'status-menunggu': driver.status === 'menunggu',
+          'status-diterima': driver.status === 'terima',
+          'status-ditolak': driver.status === 'tolak'
+        }">
+          <ng-container [ngSwitch]="driver.status">
+            <span *ngSwitchCase="'menunggu'">⏳ Menunggu</span>
+            <span *ngSwitchCase="'terima'">✅ Diterima</span>
+            <span *ngSwitchCase="'tolak'">❌ Ditolak</span>
+            <span *ngSwitchDefault>-</span>
+          </ng-container>
+        </div>
+      </div>
+    </div>
+
+    <ion-button expand="block" fill="outline" class="cancel-button" (click)="batalkanPemesanan()">
+      Batalkan
+    </ion-button>
+  </div>
+</ion-content>

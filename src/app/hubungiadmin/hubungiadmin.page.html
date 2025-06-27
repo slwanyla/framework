@@ -1,0 +1,27 @@
+<ion-header>
+  <ion-toolbar class="custom-header">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/pengaturandriver" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Hubungi Admin</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="chat-box">
+    <div *ngFor="let msg of messages" [ngClass]="{'msg-user': msg.sender === 'user', 'msg-admin': msg.sender === 'admin'}">
+      {{ msg.text }}
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-item lines="none">
+      <ion-input [(ngModel)]="newMessage" placeholder="Ketik pesan..."></ion-input>
+      <ion-button fill="clear" slot="end" (click)="sendMessage()">
+        <ion-icon name="send-sharp"></ion-icon>
+      </ion-button>
+    </ion-item>
+  </ion-toolbar>
+</ion-footer>

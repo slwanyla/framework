@@ -1,0 +1,70 @@
+ion-header {
+  ion-toolbar {
+    --background: #f5f0e6;
+    --border-style: none;
+    --box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  }
+}
+
+.header-title {
+  font-size: 19px;
+  font-weight: 600;
+  color: #000000;
+  text-align: left;
+  margin-left: -20px;
+}
+
+.notification-content {
+  --background: #f5f0e6;
+
+  .notification-container {
+    padding: 16px;
+  }
+
+  .notification-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 12px;
+  }
+
+  .notification-icon {
+    font-size: 20px;
+    color: #000;
+    margin-top: 4px;
+  }
+
+  .notification-text {
+    flex: 1;
+
+    .notification-title {
+      font-weight: 600;
+      font-size: 18px;
+      margin: 0 0 4px 0;
+      color: #000;
+    }
+
+    .notification-description {
+      font-size: 16px;
+      color: #000;
+      margin: 0;
+      line-height: 1.4;
+    }
+  }
+}
+
+.divider {
+  margin-top: 12px;
+  height: 1px;
+  width: 100%;
+  background-color: #ccc; // atau bisa #dcdcdc untuk lebih halus
+}
+
+
+ion-button {
+  --padding-start: 8px;
+  --padding-end: 8px;
+  
+  ion-icon {
+    font-size: 24px;
+  }
+}

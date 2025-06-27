@@ -1,0 +1,119 @@
+<ion-content>
+  <!-- Header -->
+  <div class="header">
+    <div class="logo-title">
+      <img src="assets/logo-jek.png" alt="Logo" class="logo-img" />
+    </div>
+    <h2>Pendapatan Anda<span>.</span></h2>
+  </div>
+
+  <!-- Penghasilan Hari Ini -->
+  <div class="card-box">
+    <h4>Penghasilan {{ selectedFilter }}</h4>
+    <h2 class="nominal">RP300.000</h2>
+  </div>
+
+  <!-- Rincian Order -->
+  <div class="order-section">
+    <div class="order-header">
+      <h4>Rincian Order</h4>
+      <ion-button size="small" fill="clear" (click)="openFilter()">
+        {{ selectedFilter }} >
+      </ion-button>
+    </div>
+
+    <div class="order-card" *ngFor="let order of filteredOrders">
+  <ion-card>
+    <ion-card-content>
+      <div class="order-item">
+  <div class="detail">
+  <div class="nama-waktu">
+    <p class="nama-pengguna">{{ order.nama }}</p>
+    <div class="waktu-tanggal">
+      <span class="waktu">{{ order.waktu }}</span>
+      <span class="tanggal">{{ formatTanggal(order.tanggal) }}</span>
+    </div>
+  </div>
+
+
+    <div class="lokasi">
+      <div class="lokasi-item">
+        <ion-icon name="person-sharp"></ion-icon>
+        <p class="titik-jemput">{{ order.jemput }}</p>
+      </div>
+      <div class="lokasi-item">
+        <ion-icon name="location-sharp"></ion-icon>
+        <p class="tujuan">{{ order.tujuan }}</p>
+      </div>
+    </div>
+
+    <div class="harga">
+      <span class="status">{{ order.status }}</span>
+      <span class="jumlah">Rp{{ order.jumlah }}</span>
+    </div>
+  </div>
+</div>
+
+    </ion-card-content>
+  </ion-card>
+</div>
+
+  </div>
+
+<!-- Filter Modal -->
+<ion-modal 
+  [isOpen]="isFilterOpen"
+  [showBackdrop]="true"
+  backdropDismiss="true"
+  (didDismiss)="closeFilter()"
+  class="filter-modal"
+>
+
+  <ng-template>
+    <ion-content class="filter-modal">
+      <div class="filter-container">
+        <!-- Tombol Tutup -->
+        <div class="close-button" (click)="closeFilter()">✕</div>
+
+        <h3 class="filter-title">Pilih Rentang Waktu</h3>
+
+        <ion-list class="filter-list">
+          <ion-item 
+            button 
+            *ngFor="let option of filterOptions" 
+            (click)="selectFilter(option)"
+            [class.selected]="selectedFilter === option">
+            <ion-label>{{ option }}</ion-label>
+            <div class="radio-dot" [class.selected]="selectedFilter === option"></div>
+          </ion-item>
+        </ion-list>
+
+        <button class="btn-terapkan" (click)="applyFilter()">Terapkan</button>
+      </div>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+</ion-content>
+
+<!-- Footer -->
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" (click)="goToHome()">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Beranda</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="activity" (click)="goToActivity()">
+      <ion-icon name="reader-outline"></ion-icon>
+      <ion-label>Aktivitas</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="income">
+      <ion-icon name="wallet-outline"></ion-icon>
+      <ion-label>Pendapatan</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="settings" (click)="goToSettings()">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Pengaturan</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

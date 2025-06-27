@@ -1,0 +1,71 @@
+<ion-header>
+  <ion-toolbar class="custom-toolbar">
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ubah Profil</ion-title>
+    <ion-buttons slot="end">
+      <ion-button class="simpan-btn" (click)="submitUpdate()">Simpan</ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+  <div class="header-extension"></div>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding ubah-profil-content">
+  <div class="foto-profile-container">
+    <div class="foto-kiri">
+      <p class="judul-foto">Foto Profil</p>
+
+      <!-- Tampilkan gambar atau ikon berdasarkan kondisi -->
+      <div *ngIf="fotoProfil; else personIcon">
+        <img [src]="fotoProfil" class="foto-profile" alt="Foto Profil" />
+      </div>
+      <ng-template #personIcon>
+        <ion-icon name="person-circle" class="foto-profile-icon"></ion-icon>
+      </ng-template>
+
+      <p  class="ganti-foto" (click)="gantiFoto()">Ganti</p>
+    </div>
+
+    <div class="foto-kanan">
+      <p class="teks-keterangan">
+        Pasang foto yang kece! Semua orang bakal lihat.
+      </p>
+    </div>
+  </div>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Nama</ion-label>
+    <ion-input [(ngModel)]="nama"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Nomor HP</ion-label>
+    <ion-input [(ngModel)]="nomorHP"></ion-input>
+  </ion-item>
+
+  <ion-item lines="none">
+    <ion-label position="stacked">Email</ion-label>
+    <ion-input [(ngModel)]="email"></ion-input>
+  </ion-item>
+
+<!-- MODAL CUSTOM PILIH FOTO -->
+<div class="modal-footer" *ngIf="showModal">
+  <div class="modal-card-footer">
+    <button class="close-btn" (click)="tutupModal()">✕</button>
+    <h2>Ganti foto profil</h2>
+
+    <div class="pilihan-foto" (click)="pilihFoto()">
+  <div class="left-content">
+    <ion-icon name="image-outline" class="galeri-icon"></ion-icon>
+    <span class="text-galeri">Pilih dari galeri</span>
+  </div>
+  <ion-icon name="chevron-forward-outline" class="arrow-icon"></ion-icon>
+</div>
+
+  </div>
+</div>
+
+
+
+</ion-content>

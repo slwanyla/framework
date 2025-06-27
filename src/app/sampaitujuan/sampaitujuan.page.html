@@ -1,0 +1,78 @@
+<ion-content class="selesai-page">
+  <div class="header">
+    <h2>Perjalanan sudah sampai<br />pada tujuan Anda.</h2>
+    <p>Terimakasih sudah menggunakan layanan kami!</p>
+  </div>
+
+  <div class="card">
+    <div class="driver-info">
+      <div
+        class="avatar"
+        [ngStyle]="{ 'background-image': 'url(' + photo + ')' }">
+      </div>
+      <div class="details">
+        <strong>{{ nama }}</strong>
+      </div>
+      <ion-icon 
+        name="chatbubble-ellipses-outline" 
+        class="chat-icon"
+        (click)="openChat()">
+      </ion-icon>
+    </div>
+
+
+    <div class="section">
+      <h4>Ringkasan Perjalanan</h4>
+      <div class="info-row">
+        <ion-icon name="location-outline"></ion-icon>
+        <span>Lokasi Jemput<br /><b>{{ pickupAddress }}</b></span>
+      </div>
+      <div class="info-row">
+        <ion-icon name="flag-outline"></ion-icon>
+        <span>Lokasi Tujuan<br /><b>{{ destinationAddress }}</b></span>
+      </div>
+
+      <div class="row-2">
+        <div class="info-box">
+          <div class="label">Waktu Tempuh</div>
+          <div><ion-icon name="time-outline"></ion-icon> {{ waktuSelesai }}</div>
+        </div>
+        <div class="info-box">
+          <div class="label">Jarak Tempuh</div>
+          <div><ion-icon name="walk-outline"></ion-icon> {{ jarakTempuh }}</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="section biaya">
+      <h4>Detail Biaya</h4>
+      <div class="row-between">
+        <span>Ongkos</span><span>Rp. {{ ongkosKirim }}</span>
+      </div>
+      <div class="row-between">
+        <span>Biaya admin</span><span>Rp. {{ biayaAdmin }}</span>
+      </div>
+      <div class="separator-line"></div>
+      <div class="row-between total">
+        <span>Total Pembayaran</span><span>Rp. {{ totalHarga }}</span>
+      </div>
+      <small>*Sudah termasuk semua biaya</small>
+    </div>
+
+      <!-- Pembayaran -->
+      <div class="section pembayaran-row">
+        <div class="pembayaran-header">
+          <h4>Metode Pembayaran</h4>
+          <span class="qris-box">QRIS</span>
+        </div>
+        <small class="paid">Sudah dibayar</small>
+      </div>
+
+    <ion-button expand="block" class="btn-selesai" (click)="goToRating()">Selesai</ion-button>
+  </div>
+</ion-content>
+
+<!-- Footer tetap -->
+<ion-footer class="selesai-footer">
+  <div class="footer-box"></div>
+</ion-footer>

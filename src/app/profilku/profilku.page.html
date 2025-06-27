@@ -1,0 +1,69 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Profilku</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" [scrollY]="false" class="no-scroll-content">
+
+  <!-- Header Profile -->
+  <div class="profile-header">
+    <div class="profile-info">
+      <ion-avatar>
+  <ng-container *ngIf="user.photoUrl; else defaultIcon">
+    <img [src]="user.photoUrl" alt="User" />
+  </ng-container>
+  <ng-template #defaultIcon>
+    <ion-icon name="person-circle" class="default-avatar-icon"></ion-icon>
+  </ng-template>
+</ion-avatar>
+
+
+      <div class="user-details">
+  <h2>{{ user.name }}</h2>
+  <p>{{ user.email }}</p>
+  <p>{{ user.phone }}</p>
+</div>
+      <ion-button fill="clear" class="edit-button" size="small" (click)="goToUbahProfil()">
+        <ion-icon slot="icon-only" name="pencil-outline"></ion-icon>
+      </ion-button>
+    </div>
+  </div>
+
+  <!-- Menu Section -->
+  <div class="menu-section">
+    <h3>Akun</h3>
+    <ion-list>
+  <ion-item button (click)="goToAktivitas()">
+    <ion-icon name="document" slot="start"></ion-icon>
+    <ion-label>Aktivitasku</ion-label>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+
+  <ion-item button (click)="goToPusatBantuan()">
+    <ion-icon name="headset" slot="start"></ion-icon>
+    <ion-label>Pusat Bantuan</ion-label>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+
+
+  <ion-item button (click)="goToNotifikasi()">
+    <ion-icon name="notifications" slot="start"></ion-icon>
+    <ion-label>Notifikasi</ion-label>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+
+
+  <ion-item button (click)="logout()">
+    <ion-icon name="log-out" slot="start"></ion-icon>
+    <ion-label>Logout</ion-label>
+    <ion-icon name="chevron-forward-outline" slot="end"></ion-icon>
+  </ion-item>
+
+
+  </ion-list>
+    </div>
+  </ion-content>

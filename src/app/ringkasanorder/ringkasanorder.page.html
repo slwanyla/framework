@@ -1,0 +1,62 @@
+<ion-content class="selesai-container">
+
+  <ng-container *ngIf="detailOrder; else loading">
+    
+    <!-- ✅ Konten utama jika data sudah siap -->
+    <div class="top-section">
+      <h2>Perjalanan telah selesai</h2>
+      <p class="subtitle">Terimakasih telah mengantar pelanggan sampai tujuan.</p>
+    </div>
+
+    <div class="section">
+      <h3 class="section-title">Ringkasan Perjalanan</h3>
+      <div class="section-line"></div>
+
+      <div class="info-row">
+        <ion-icon name="location-outline"></ion-icon>
+        <p>{{ detailOrder.lokasi_jemput }}</p>
+      </div>
+
+      <div class="info-row">
+        <ion-icon name="flag-outline"></ion-icon>
+        <p>{{ detailOrder.lokasi_tujuan }}</p>
+      </div>
+
+      <div class="info-row">
+        <ion-icon name="time-outline"></ion-icon>
+        <p>{{ detailOrder.waktu_selesai }}</p>
+      </div>
+
+      <div class="info-row">
+        <ion-icon name="chatbubble-ellipses-outline" class="chat-icon" (click)="bukaChat()"></ion-icon>
+      </div>
+    </div>
+
+    <!-- Metode Pembayaran -->
+    <div class="section payment-section">
+      <h3 class="payment-title">Metode Pembayaran</h3>
+      <div class="section-line"></div>
+
+      <div class="payment-detail">
+        <div class="payment-row">
+          <span>Total</span>
+          <span class="amount">Rp. {{ detailOrder.tarif | number:'1.0-0' }}</span>
+        </div>
+
+      <div class="payment-inline">
+        <div class="payment-label">Metode Pembayaran:</div>
+        <div class="payment-method">QRIS</div>
+      </div>
+      </div>
+    </div>
+
+    <ion-button expand="block" class="home-button" (click)="goToHome()">Back to home</ion-button>
+  </ng-container>
+
+  <!-- 🔄 Spinner loading saat data belum siap -->
+  <ng-template #loading>
+    <div class="spinner-wrapper">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,18 @@
+<ion-content class="verifycode-container" fullscreen>
+  <div class="verify-box">
+    <ion-icon name="shield-checkmark" class="icon-verify"></ion-icon>
+    <h2>Verifikasi Kode</h2>
+    <p>Kami telah mengirim 4 digit kode ke<br /><strong>{{ email }}</strong></p>
+
+    <div class="code-inputs">
+      <input type="text" maxlength="1" [(ngModel)]="code1">
+      <input type="text" maxlength="1" [(ngModel)]="code2">
+      <input type="text" maxlength="1" [(ngModel)]="code3">
+      <input type="text" maxlength="1" [(ngModel)]="code4">
+    </div>
+
+    <a (click)="resendOtp()" style="color: #007bff; cursor: pointer;">Kirim Ulang</a><br>
+
+    <ion-button class="verify-btn" (click)="verifycode()">Verifikasi</ion-button>
+  </div>
+</ion-content>

@@ -1,0 +1,49 @@
+<ion-content class="home-container">
+  <div class="header-card">
+    <div class="profile-info">
+      <div class="left-info">
+        <img src="assets/logo-jek.png" class="logo" alt="MBJEK" />
+        <div class="greeting">
+          <p>{{ greeting }}, Selamat Datang di <br><b>M-BJEK</b></p>
+        </div>
+      </div>
+      <div class="notif-btn" (click)="goToPage('/profilku')">
+        <img *ngIf="photoUrl; else defaultIcon" [src]="photoUrl" class="avatar-img" alt="Foto Profil" />
+        <ng-template #defaultIcon>
+          <ion-icon name="person-circle" class="default-avatar-icon"></ion-icon>
+        </ng-template>
+      </div>      
+    </div>
+    <ion-searchbar placeholder="Search anything you want..."></ion-searchbar>
+  </div>
+
+  <h3 class="section-title">Mau kemana hari ini?</h3>
+
+  <div class="service-icons">
+    <div class="service-item" (click)="pesanOjol('motor')">
+      <ion-icon name="bicycle-outline"></ion-icon>
+      <span>Motor</span>
+    </div>
+    <div class="service-item" (click)="pesanOjol('mobil')">
+      <ion-icon name="car-outline"></ion-icon>
+      <span>Mobil</span>
+    </div>
+  </div>
+</ion-content>
+
+<ion-footer>
+  <ion-tab-bar slot="bottom">
+    <ion-tab-button tab="home" (click)="goToPage('/beranda')">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label>Beranda</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="aktivitas" (click)="goToPage('/aktivitas')">
+      <ion-icon name="list-outline"></ion-icon>
+      <ion-label>Aktivitas</ion-label>
+    </ion-tab-button>
+    <ion-tab-button tab="setting" (click)="goToPage('/profilku')">
+      <ion-icon name="settings-outline"></ion-icon>
+      <ion-label>Setting</ion-label>
+    </ion-tab-button>
+  </ion-tab-bar>
+</ion-footer>

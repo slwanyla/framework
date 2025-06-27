@@ -1,0 +1,35 @@
+<ion-content>
+  <!-- MAP SECTION -->
+  <div class="map-wrapper">
+    <div id="map-penumpang-naik"></div>
+  </div>
+
+  <!-- CUSTOMER CARD -->
+  <div class="customer-card">
+     <ion-icon name="chatbubble-ellipses-outline" class="chat-icon" (click)="bukaChat()"></ion-icon>
+    <div class="customer-info">
+      <div class="profile-pic"></div>
+      <div class="name">{{ customerNama }}</div>
+    </div>
+    <p *ngIf="distanceToDestination">Jarak ke Tujuan: {{ distanceToDestination }} km</p>
+
+    <div class="pemisah-horizontal"></div>
+    <div class="address-section">
+      <div class="alamat-item">
+        <ion-icon name="location-sharp"></ion-icon>
+        <span>{{ alamatJemput }}</span>
+      </div>
+      <div class="line-vertical"></div>
+      <div class="alamat-item">
+       <ion-icon name="flag-sharp"></ion-icon>
+        <span>{{ alamatTujuan }}</span>
+      </div>
+    </div>
+
+    <div class="total-section">
+      <span>Total</span>
+      <span class="harga">Rp. {{ totalHarga | number:'1.0-0' }}</span>
+    </div>
+    <ion-button expand="block" class="menuju-btn" fill="solid" (click)="customerNaik()"> SampaI Tujuans </ion-button>
+  </div>
+</ion-content>
