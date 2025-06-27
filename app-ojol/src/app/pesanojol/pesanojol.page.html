@@ -1,0 +1,73 @@
+<ion-content class="lokasi-page">
+  <div class="header">
+    <ion-icon name="arrow-back-outline" class="back-icon" (click)="goBack()"></ion-icon>
+    <h2>Pilih Lokasi Jemput & <br />Lokasi Tujuan Anda.</h2>
+    <p>Silakan pilih lokasi tempat Anda akan dijemput dan tujuan Anda untuk melanjutkan proses pemesanan.</p>
+  </div>
+
+  <div class="map-container" id="map-pesan" ></div>
+
+  <div class="form-container">
+    <!-- Input Lokasi Jemput -->
+    <label>Lokasi Jemput</label>
+    <div class="input-box">
+      <ion-icon name="search-outline"></ion-icon>
+      <input
+          type="text"
+          placeholder="Pilih lokasi jemput"
+          [(ngModel)]="pickupAddress"
+          (input)="onSearchInput(pickupAddress, 'pickup')"
+          autocomplete="off"
+        />
+    </div>
+
+    <!-- Dropdown hasil pencarian jemput -->
+    <div class="suggestions" *ngIf="pickupSuggestions && pickupSuggestions.length > 0">
+      <ion-list>
+        <ion-item button *ngFor="let item of pickupSuggestions" (click)="selectAddress(item, 'pickup')">
+          {{ item.display_name }}
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <button type="button" class="secondary-btn" (click)="getCurrentLocation()">Gunakan Lokasi Saat Ini</button>
+
+    <!-- Input Lokasi Tujuan -->
+    <label>Lokasi Tujuan</label>
+    <div class="input-box">
+      <ion-icon name="search-outline"></ion-icon>
+      <input
+          type="text"
+          placeholder="Cari lokasi tujuan Anda"
+          [(ngModel)]="destinationAddress"
+          (input)="onSearchInput(destinationAddress, 'destination')"
+          autocomplete="off"
+        />
+    </div>
+
+    <!-- Dropdown hasil pencarian tujuan -->
+    <div class="suggestions" *ngIf="destinationSuggestions && destinationSuggestions.length > 0">
+      <ion-list>
+        <ion-item button *ngFor="let item of destinationSuggestions" (click)="selectAddress(item, 'destination')">
+          {{ item.display_name }}
+        </ion-item>
+      </ion-list>
+    </div>
+
+    <!-- Tombol Lanjut -->
+   <button
+  type="button"
+  class="primary-btn"
+  [disabled]="!formLengkap() || loadingPesanOjol"
+  [ngClass]="{ 'disabled-btn': !formLengkap() || loadingPesanOjol }"
+  (click)="lanjutKeDetail()">
+
+  <ng-container *ngIf="!loadingPesanOjol">Lanjutkan Pemesanan</ng-container>
+  <ion-spinner name="dots" *ngIf="loadingPesanOjol"></ion-spinner>
+</button>
+
+  </div>
+</ion-content>
+
+<div class="footer"></div>
+

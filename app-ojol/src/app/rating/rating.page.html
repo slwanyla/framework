@@ -1,0 +1,41 @@
+<ion-header class="custom-header">
+  <div class="header-content">
+    <p class="title">Bagaimana Pengalaman Anda?</p>
+    <p class="subtitle">Beri rating untuk driver anda!</p>
+  </div>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <div class="driver-card">
+    <div class="driver-photo">
+      <img 
+        *ngIf="fotoDriver; else defaultFoto" 
+        [src]="fotoDriver" 
+        alt="Foto Driver" 
+        (error)="fotoDriver = null" />
+      <ng-template #defaultFoto>
+        <img src="assets/img/default-driver.png" alt="Foto Default Driver" />
+      </ng-template>
+    </div>
+    <p class="driver-name">{{ namaDriver }}</p>
+    <p class="driver-vehicle">{{ kendaraan }}</p>
+
+    <div class="stars">
+      <ion-icon
+        *ngFor="let star of [1,2,3,4,5]"
+        [name]="rating >= star ? 'star' : 'star-outline'"
+        (click)="setRating(star)">
+      </ion-icon>
+    </div>
+
+    <ion-textarea
+      placeholder="Tulis ulasan Anda disini..."
+      class="review-box"
+      [(ngModel)]="ulasan">
+    </ion-textarea>
+
+    <ion-button expand="block" class="submit-btn" (click)="kirimRating()">Selesai</ion-button>
+  </div>
+</ion-content>
+
+<div class="footer-box"></div>

@@ -1,0 +1,96 @@
+.custom-header {
+  background-color: #0e1e5b;
+  border-bottom-left-radius: 40px;
+  border-bottom-right-radius: 40px;
+  padding: 20px 10px;
+  text-align: center;
+  color: white;
+
+  .title {
+    font-weight: bold;
+    font-size: 20px;
+    margin: 0;
+  }
+
+  .subtitle {
+    font-size: 15.5px;
+    margin-top: 15px;
+  }
+}
+
+.driver-card {
+  background: #fff;
+  margin-top: -10px;
+  padding: 20px;
+  border-radius: 20px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.05);
+  text-align: center;
+
+  .driver-photo {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    background: #d9d9d9;
+    margin: 0 auto 10px auto;
+  }
+
+  .driver-name {
+    font-weight: bold;
+    font-size: 18px;
+    margin: 5px 0 0 0;
+  }
+
+  .driver-vehicle {
+    font-size: 15px;
+    color: #777;
+    margin-bottom: 10px;
+    margin-left: 8px;
+  }
+
+  .stars {
+    font-size: 20px;
+    margin-bottom: 15px;
+
+    ion-icon {
+      color: #0057ff;
+    }
+  }
+
+  .review-box {
+    border: 1px solid #ccc;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 17px;
+    resize: none;
+    outline: none;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    margin-top: 0px;
+  }
+
+    .submit-btn {
+        --background: #0e1e5b;
+        --color: white;
+        --border-radius: 30px;
+        font-size: 14px;
+        font-weight: 500;
+        padding: 12px 24px;
+        width: 90%;        
+        max-width: 340px;  
+        margin: 0 auto;
+        display: block;
+        text-align: center;
+    }
+}
+
+.footer-box {
+  background: #192559;
+  height: 70px;
+  width: 100%;
+  border-top-left-radius: 45px;
+  border-top-right-radius: 45px;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  z-index: 10;
+}

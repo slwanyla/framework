@@ -1,0 +1,153 @@
+.map-container {
+  --background: #fff;
+
+ .map-wrapper {
+    height: 100vh;
+    width: 100%;
+    position: relative;
+
+    #map-tujuan-akhir {
+      height: 100%;
+      width: 100%;
+      z-index: 0;
+    }
+
+    .navigate-btn {
+      position: absolute;
+      bottom: 20px;
+      right: 20px;
+      z-index: 999;
+      background: white;
+      border-radius: 50%;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    }
+  }
+
+  .info-card {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #fff;
+    border-top-left-radius: 25px;
+    border-top-right-radius: 25px;
+    padding: 20px;
+    box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.1);
+    z-index: 999;
+    min-height: 350px;
+    display: flex;
+    flex-direction: column;
+
+    .chat-icon {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    font-size: 22px;
+    color: #333;
+    z-index: 10;
+    background: #fff;
+    border-radius: 50%;
+    padding: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+  }
+
+    .spacer {
+      flex-grow: 1;
+    }
+
+    .profile-section {
+      display: flex;
+      align-items: center;
+      margin-bottom: 12px;
+
+      .avatar-placeholder {
+        width: 50px;
+        height: 50px;
+        background: #e0e0e0;
+        border-radius: 50%;
+        margin-right: 12px;
+      }
+
+      
+      .user-info {
+        .name {
+          margin: 0;
+          font-weight: 600;
+          font-size: 18px;
+          color: #000;
+        }
+      }
+    }
+
+    .university-row {
+      display: flex;
+      align-items: center;
+      margin-left: 30px;
+      margin-bottom: 10px;
+      margin-top: -2px;
+      margin-top: 7px;
+
+      ion-icon {
+        font-size: 18px;
+        color: #192559;
+        margin-right: 6px;
+      }
+
+      .university {
+        font-size: 16px;
+        color: #444;
+        margin: 0;
+      }
+    }
+
+    .divider-line {
+      height: 0.5px;
+      background-color: #000;
+      margin: 10px 0;
+      margin-top: -2px;
+    }
+
+    .status-info {
+      margin-bottom: 12px;
+
+      .status-text {
+        margin: 0;
+        font-weight: 600;
+        font-size: 15px;
+        color: #000;
+      }
+
+      .status-time {
+        margin: 2px 0 0;
+        font-size: 14px;
+        color: #666;
+      }
+    }
+
+.finish-button {
+  --background: #192559;
+  --border-radius: 12px;
+  color: #fff;
+  font-weight: 600;
+  margin-top: 10px; 
+  margin-bottom: 8px;
+}
+
+.review-button {
+  --color: #192559;
+  --border-color: #192559;
+  --border-radius: 12px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+
+    .footer-note {
+      font-size: 12px;
+      color: #4b4848;
+      text-align: center;
+      margin-top: auto;
+    }
+  }
+}

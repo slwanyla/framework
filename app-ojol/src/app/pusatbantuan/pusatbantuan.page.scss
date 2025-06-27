@@ -1,0 +1,44 @@
+ion-header {
+  .custom-toolbar {
+    --background: var(--custom-header-bg, #192559);
+    --color: #fff;
+    font-weight: bold;
+
+    ion-title {
+      font-size: 19px;
+    }
+  }
+
+  ion-back-button {
+    color: white;
+  }
+}
+
+ion-content {
+  --background: #f5f0e6;
+}
+
+.faq-list {
+  margin-top: 10px;
+
+  ion-item {
+    --padding-start: 16px;
+    --inner-padding-end: 16px;
+    font-size: 16px;
+    color: #000;
+    --border-color: transparent;
+    border-bottom: 1px solid #888;
+    --inner-border-width: 0;
+    --background: #f5f0e6; 
+    
+  }
+
+  ion-label {
+    white-space: normal;
+    line-height: 1.4;
+  }
+
+  strong {
+    color: #000;
+  }
+}

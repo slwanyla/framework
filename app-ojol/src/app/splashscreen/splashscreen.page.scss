@@ -1,0 +1,59 @@
+.splash-container {
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #192559;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .logo {
+    position: absolute;
+    width: 250px; /* ukuran lebih besar */
+    height: 250px;
+    animation-duration: 1.5s;
+    animation-fill-mode: forwards;
+  }
+  
+  .left-logo {
+    left: -150px;
+    width: 130px;
+    height: 130px;
+    animation-name: slide-in-left;
+  }
+  .right-logo {
+    right: -180px;
+    width: 330px; /* lebih besar */
+    height: 300px;
+    animation-name: slide-in-right;
+    z-index: 2;
+  }
+
+  .slide-up {
+    animation: slide-up 1s ease-in-out forwards;
+  }
+  
+  @keyframes slide-in-left {
+    to {
+      left: calc(45% - 130px); /* disesuaikan dengan ukuran .left-logo */
+    }
+  }
+  
+  @keyframes slide-in-right {
+    to {
+      right: calc(65% - 250px); /* disesuaikan dengan ukuran .right-logo */
+    }
+  }
+  
+  @keyframes slide-up {
+    0% {
+      transform: translateY(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100%);
+      opacity: 0;
+    }
+  }
+  
