@@ -1,72 +1,48 @@
-.custom-header {
-  --background: #192559;
-  --color: #ffffff;
-  color: #fff;
-
-  ion-title {
-    color: #fff;
-  }
-
-  ion-back-button {
-    color: #fff;
-  }
+.chat-header {
+  --background: #192559 !important;
+  --color: white !important;
 }
 
-.chat-content {
-  --background: #f5f5f5;
+ion-title {
+  font-weight: bold;
 }
 
 .chat-container {
   display: flex;
   flex-direction: column;
-  padding: 10px;
+  height: 100%;
 }
 
-.chat-bubble {
+.chat-messages {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.message {
+  padding: 10px 14px;
+  margin-bottom: 10px;
+  border-radius: 20px;
   max-width: 75%;
-  padding: 10px;
-  margin: 6px 0;
-  border-radius: 15px;
   word-wrap: break-word;
-  position: relative;
-  font-size: 15px;
 }
 
-.msg-user {
-  align-self: flex-end;
-  background-color: #dcf8c6;
-  color: #000;
-  border-top-right-radius: 0;
-}
-
-.msg-driver {
+.message.received {
+  background-color: #e0e0e0;
   align-self: flex-start;
-  background-color: #ffffff;
-  color: #000;
-  border-top-left-radius: 0;
+  margin-left: 10px;      
+  margin-right: 40px;  
 }
 
-.timestamp {
-  font-size: 10px;
-  color: #777;
-  margin-top: 5px;
-  text-align: right;
+.message.sent {
+  background-color: #7f9bbc;
+  color: white;
+  align-self: flex-end;
+  margin-right: 0px;  
+  margin-left: 80px;  
 }
 
 .chat-input {
-  --padding-start: 10px;
-}
-
-ion-footer {
-  ion-toolbar {
-    --background: #fff;
-  }
-
-  ion-input {
-    flex: 1;
-  }
-
-  ion-button {
-    margin-left: 6px;
-  }
+  padding: 8px;
+  background-color: #fff;
 }

@@ -10,8 +10,8 @@ export class FirebaseLocationService {
 
   constructor() { }
 
-  updateDriverLocation(driverId: number, lat: number, lng: number): void {
-    const lokasiRef = ref(db, `lokasi_driver/${driverId}`);
+  updateDriverLocation(orderId: number, lat: number, lng: number): void {
+    const lokasiRef = ref(db, `lokasi_driver/${orderId}`);
     set(lokasiRef, {
       lat,
       lng,

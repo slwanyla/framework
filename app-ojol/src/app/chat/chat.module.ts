@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
-import { ChatPageRoutingModule } from './chat-routing.module';  // Routing spesifik SplashPage
+import { RouterModule } from '@angular/router';
 import { ChatPage } from './chat.page';
 
 @NgModule({
@@ -10,8 +10,8 @@ import { ChatPage } from './chat.page';
     CommonModule,
     FormsModule,
     IonicModule,
-    ChatPageRoutingModule,
-    ChatPage
-  ]
+    RouterModule.forChild([{ path: '', component: ChatPage }])
+  ],
+  declarations: [ChatPage]
 })
 export class ChatPageModule {}

@@ -99,6 +99,41 @@ public function updateStatus(Request $request)
     ]);
 }
 
+    public function PendapatanDriver($userId)
+{
+    // Ambil ID driver berdasarkan user_id
+    $driver = \App\Models\Driver::where('user_id', $userId)->first();
+
+    if (!$driver) {
+        return response()->json(['error' => 'Driver tidak ditemukan'], 404);
+    }
+
+    // Gunakan driver_id dari hasil query di atas
+    $orders = \App\Models\Order::with('customer')
+        ->where('driver_id', $driver->id)
+        ->where('status', 'selesai')
+        ->orderBy('waktu_selesai', 'desc')
+        ->get();
+
+    $riwayat = $orders->map(function ($order) {
+        return [
+            'id' => $order->id,
+            'nama' => $order->customer->nama ?? '-',
+            'status' => $order->status,
+            'waktu' => $order->waktu_selesai,
+            'jemput' => $order->lokasi_jemput,
+            'tujuan' => $order->lokasi_tujuan,
+            'harga' => $order->tarif,
+            'penghasilan_driver' => $order->penghasilan_driver,
+            'tanggal' => $order->waktu_selesai ? $order->waktu_selesai->format('c') : null,
+        ];
+    });
+
+    return response()->json([
+        'riwayat' => $riwayat,
+    ]);
+}
+
 
 
 }

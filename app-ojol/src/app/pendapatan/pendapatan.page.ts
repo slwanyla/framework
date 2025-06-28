@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { MenudriverService } from '../services/menudriver.service';
 
 @Component({
   selector: 'app-pendapatan',
@@ -15,75 +16,66 @@ export class PendapatanPage implements OnInit {
   selectedFilter = 'Hari ini';
   isFilterOpen = false;
   filterOptions = ['Hari ini', 'Kemarin', 'Minggu ini', 'Semua'];
+  totalPenghasilan: number = 0;
 
-  // Data dummy order
-  allOrders = [
-    {
-      nama: 'Rifha Reinda Warich',
-      waktu: '09.00',
-      jemput: 'Perum Karaba Indah Blok R.48',
-      tujuan: 'Universitas Buana Perjuangan',
-      status: 'Selesai',
-      jumlah: 24000,
-      tanggal: new Date()
-    },
-    {
-      nama: 'Dina Ayu',
-      waktu: '10.00',
-      jemput: 'Cikampek',
-      tujuan: 'Stasiun Karawang',
-      status: 'Selesai',
-      jumlah: 15000,
-      tanggal: new Date(new Date().setDate(new Date().getDate() - 1))
-    },
-    {
-      nama: 'Yusuf Ahmad',
-      waktu: '14.00',
-      jemput: 'Tanjungpura',
-      tujuan: 'BTC',
-      status: 'Selesai',
-      jumlah: 17000,
-      tanggal: new Date(new Date().setDate(new Date().getDate() - 4))
-    }
-  ];
+  allOrders: any[] = []; // ✅ Tambahkan ini
+  filteredOrders: any[] = [];
 
-  filteredOrders = this.allOrders;
-
-  constructor(private router: Router) {}
+  constructor(private router: Router, private menuDriverService: MenudriverService) {}
 
   ngOnInit() {
+  const userId = localStorage.getItem('user_id');
+  console.log('🔍 ID Driver yang dikirim:', userId);
+
+  if (!userId) return;
+
+  this.menuDriverService.pendapatan(userId).subscribe((data) => {
+    const selesaiOnly = data.riwayat.filter((order: any) => order.status.toLowerCase() === 'selesai');
+    console.log('🔥 Data dari API:', data);
+    this.allOrders = selesaiOnly
+    .filter((item: any) => !!item.tanggal)
+    .map((item: any) => {
+      const tgl = new Date(item.tanggal);
+      console.log('📅 Tanggal Order:', item.tanggal, '| Parsed:', tgl.toDateString());
+      return {
+        ...item,
+        jumlah: item.penghasilan_driver,
+        tanggal: tgl
+      };
+    });
+
+
     this.filterOrders();
-  }
+  });
+}
+
 
   // Buka modal filter
   openFilter() {
     this.isFilterOpen = true;
   }
 
-  // Tutup modal filter
   closeFilter() {
     this.isFilterOpen = false;
   }
 
-  // Pilih filter
   selectFilter(filter: string) {
     this.selectedFilter = filter;
+    this.filterOrders();
   }
 
-  // Terapkan filter
   applyFilter() {
     this.filterOrders();
     this.closeFilter();
   }
 
-  // Reset filter ke default
   resetFilter() {
     this.selectedFilter = 'Hari ini';
     this.filterOrders();
     this.closeFilter();
   }
 
-  // Logika filter data
+  // Logika filter dan hitung total penghasilan
   filterOrders() {
     const today = new Date();
 
@@ -99,21 +91,23 @@ export class PendapatanPage implements OnInit {
       );
     } else if (this.selectedFilter === 'Minggu ini') {
       const startOfWeek = new Date(today);
-      startOfWeek.setDate(today.getDate() - today.getDay());
+      startOfWeek.setDate(today.getDate() - ((today.getDay() + 6) % 7)); // Mulai dari Senin
+
       this.filteredOrders = this.allOrders.filter(order =>
         order.tanggal >= startOfWeek
       );
     } else {
-      this.filteredOrders = this.allOrders; // Semua
+      this.filteredOrders = this.allOrders;
     }
+
+    // ✅ Hitung total penghasilan
+    this.totalPenghasilan = this.filteredOrders.reduce((acc, order) => acc + order.jumlah, 0);
   }
 
-  // Membandingkan tanggal
   isSameDay(date1: Date, date2: Date): boolean {
-    return date1.getDate() === date2.getDate() &&
-           date1.getMonth() === date2.getMonth() &&
-           date1.getFullYear() === date2.getFullYear();
-  }
+  return date1.toDateString() === date2.toDateString();
+}
+
 
   // Navigasi tab
   goToHome() {

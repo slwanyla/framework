@@ -51,9 +51,9 @@ export class SampaitujuanPage implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.route.queryParams.subscribe(params => {
-      this.foto = params['foto'] || this.foto;
+      this.foto = params['photo'] || this.foto;
       this.nama = params['nama'] || 'Nama Driver';
-      this.rating = params['rating'] || '0';
+
       this.merk = params['merk'] || 'Merk';
       this.warna = params['warna'] || 'Warna';
       this.plat = params['plat'] || 'Plat';
@@ -122,7 +122,7 @@ export class SampaitujuanPage implements OnInit, OnDestroy {
     }
   }
 
-  goBack() {
+  goToBeranda() {
     this.router.navigate(['/beranda'], {
       queryParams: {
         nama: this.nama,

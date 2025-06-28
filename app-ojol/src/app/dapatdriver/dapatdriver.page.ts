@@ -390,11 +390,6 @@ showDriverInfoPopup(lat: number, lng: number, text: string) {
 }
 
 
-
-  batalKeBeranda() {
-    this.router.navigate(['/beranda']);
-  }
-
   openChat() {
     this.router.navigate(['/chat'], {
       queryParams: {

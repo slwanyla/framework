@@ -73,5 +73,15 @@ export class MenudriverService {
     });
   } 
   
+  // src/app/services/history.service.ts
+pendapatan(driverId: string) {
+  return this.http.get<any>(
+    `${environment.apiUrl}/pendapatan/${driverId}`,
+    { headers: this.getHeaders() }
+  );
+}
+
+
+
 
 }

@@ -14,10 +14,9 @@
     <h4>Aktivitas Hari Ini</h4>
   </div>
   <div class="summary-content">
-    <div>Order Masuk <b>5</b></div>
-    <div>Selesai <b>4</b></div>
-    <div>Pendapatan <b>Rp. 100.000</b></div>
-    <div>Waktu Aktif <b>2 Jam 15 Menit</b></div>
+    <div>Order Masuk <b>{{ jumlahOrderMasuk }}</b></div>
+    <div>Selesai <b>{{ jumlahOrderSelesai }}</b></div>
+
   </div>
 </div>
 
@@ -39,12 +38,15 @@
         <ion-card-content>
           <div class="card-header">
             <b>{{ riwayat.nama }}</b>
+            <div>{{ riwayat.tanggal }}</div>
             <span class="status">{{ riwayat.status }}</span>
           </div>
           <div class="card-body">
-            <ion-icon name="location-sharp"></ion-icon>
+            
             <div class="alamat">
+              <ion-icon name="person-sharp"></ion-icon>
               <p>{{ riwayat.dari }}</p>
+              <ion-icon name="location-sharp"></ion-icon>
               <p>{{ riwayat.ke }}</p>
             </div>
             <div class="detail">

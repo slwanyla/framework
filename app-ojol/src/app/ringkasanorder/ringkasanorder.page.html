@@ -24,11 +24,7 @@
 
       <div class="info-row">
         <ion-icon name="time-outline"></ion-icon>
-        <p>{{ detailOrder.waktu_selesai }}</p>
-      </div>
-
-      <div class="info-row">
-        <ion-icon name="chatbubble-ellipses-outline" class="chat-icon" (click)="bukaChat()"></ion-icon>
+        <p>{{ detailOrder.waktu_selesai | date:'yyyy-MM-dd HH:mm:ss' }}</p>
       </div>
     </div>
 
@@ -58,7 +54,31 @@
       </div>
     </div>
 
+    <!-- QRIS LOADING -->
+  
+    <div *ngIf="loadingQris" class="qris-loading-wrapper">
+      <ion-spinner name="dots"></ion-spinner>
+    </div>
+
+
+    <div class="section qris-section" *ngIf="qrisUrl && !loadingQris">
+      <h3 class="payment-title">QRIS Pembayaran</h3>
+      <div class="section-line"></div>
+
+      <p>Scan QR berikut untuk membayar:</p>
+      
+      <img *ngIf="qrisUrl"
+          [src]="'https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=' + qrisUrl"
+          alt="QRIS" class="qris-img" />
+
+      <ion-text color="medium" class="qris-note">
+        <p>QR ini hanya berlaku untuk pesanan ini dan akan kadaluarsa setelah beberapa menit.</p>
+      </ion-text>
+    </div>
+
+    <!-- ✅ SIMPAN DI DALAM ng-container -->
     <ion-button expand="block" class="home-button" (click)="goToHome()">Back to home</ion-button>
+
   </ng-container>
 
   <!-- 🔄 Spinner loading saat data belum siap -->
@@ -67,4 +87,5 @@
       <ion-spinner name="dots"></ion-spinner>
     </div>
   </ng-template>
+
 </ion-content>

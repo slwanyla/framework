@@ -11,6 +11,7 @@ use App\Models\Driver;
 use App\Models\Tarif;
 use App\Models\FcmToken;
 use App\Models\OrderDriverCandidate;
+use App\Http\Controllers\FCMTokenController;
 use Midtrans\Snap;
 use Midtrans\Config;
 
@@ -240,25 +241,16 @@ public function buatOrder(Request $request)
         'status' => 'menunggu'
     ]);
 
-        $tokens = FcmToken::where('user_id', $driverTerdekat->id)->pluck('token');
-        foreach ($tokens as $token) {
-            Http::withHeaders([
-                'Authorization' => 'key=' . env('FCM_SERVER_KEY'),
-                'Content-Type' => 'application/json',
-            ])->post('https://fcm.googleapis.com/fcm/send', [
-                'to' => $token,
-                'notification' => [
-                    'title' => 'Order Baru Masuk!',
-                    'body' => 'Ada orderan dari pelanggan dekat lokasi Anda.',
-                ],
-                'data' => [
-                    'order_id' => $order->id,
-                    'type' => 'order_baru'
-                ],
-            ]);
-        }
-    }
-
+    FCMTokenController::kirimFcm(
+        $driverTerdekat->id,
+        'Order Baru Masuk!',
+        'Ada orderan dari pelanggan dekat lokasi Anda.',
+        [
+            'order_id' => $order->id,
+            'type' => 'order_baru'
+        ]
+    );
+}
     return response()->json([
         'message' => 'Order berhasil dibuat',
         'order' => $order,
@@ -317,6 +309,18 @@ public function buatOrder(Request $request)
     $order->driver_id = $driver->id; 
     $order->status = 'dijemput';
     $order->save();
+
+    FCMTokenController::kirimFcm(
+    $order->customer_id,
+    'Driver Menuju Lokasi!',
+    'Driver telah menerima order Anda dan dalam perjalanan menjemput.',
+    [
+        'order_id' => $order->id,
+        'status' => 'dijemput',
+        'type' => 'update_status'
+    ]
+);
+
 
     return response()->json(['message' => 'Order berhasil diambil', 'order' => $order]);
 }
@@ -493,39 +497,60 @@ public function getOrderTerbaru(Request $request)
     }
 
     public function updatePerjalanan(Request $request)
-    {
-        $request->validate([
-            'order_id' => 'required|exists:orders,id',
-            'status' => 'required|string'
-        ]);
+{
+    \Log::info('🚀 Menerima request updatePerjalanan', $request->all());
 
-        $order = Order::find($request->order_id);
+    $request->validate([
+        'order_id' => 'required|exists:orders,id',
+        'status' => 'required|string'
+    ]);
 
-        if (!$order) {
-            return response()->json(['message' => 'Order tidak ditemukan.'], 404);
-        }
+    $order = Order::find($request->order_id);
 
-        $order->status = $request->status;
-        $order->save();
+    if (!$order) {
+        return response()->json(['message' => 'Order tidak ditemukan.'], 404);
+    }
 
-         if ($request->status === 'selesai') {
-            $order->waktu_selesai = now(); 
-        }
+    $order->status = $request->status;
 
-        $order->save();
+    if ($request->status === 'selesai') {
+        $order->waktu_selesai = now(); 
 
-        \DB::table('order_status_logs')->insert([
+        // Hitung penghasilan driver bersih dari tarif
+        $tarifTotal = $order->tarif;
+        $totalPotongan = 20 / 100;   // 20%
+        $penghasilanBersih = round($tarifTotal * (1 - $totalPotongan));
+
+        $order->penghasilan_driver = $penghasilanBersih;
+    }
+
+    $order->save();
+
+    if (in_array($request->status, ['dijemput', 'dalam_perjalanan', 'selesai'])) {
+    FCMTokenController::kirimFcm(
+        $order->customer_id,
+        'Status Perjalanan',
+        'Status order Anda kini: ' . ucfirst(str_replace('_', ' ', $request->status)),
+        [
+            'order_id' => $order->id,
+            'status' => $request->status,
+            'type' => 'update_status'
+        ]
+    );
+}
+
+
+    \DB::table('order_status_logs')->insert([
         'order_id' => $order->id,
         'status' => $request->status,
         'created_at' => now(),
     ]);
 
-        return response()->json([
-            'message' => '✅ Status perjalanan berhasil diperbarui.',
-            'status_baru' => $order->status
-        ]);
-    }
-
-
+    return response()->json([
+        'message' => '✅ Status perjalanan berhasil diperbarui.',
+        'status_baru' => $order->status,
+        'penghasilan_driver' => $order->penghasilan_driver,
+    ]);
+}
 
 }

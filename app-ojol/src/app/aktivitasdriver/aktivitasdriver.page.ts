@@ -15,6 +15,9 @@ export class AktivitasdriverPage implements OnInit {
 
   selectedFilter: string = 'hariini';
   riwayatLayanan: any[] = [];
+  jumlahOrderMasuk: number = 0;
+  jumlahOrderSelesai: number = 0;
+
 
   constructor(
     private router: Router,
@@ -45,12 +48,48 @@ export class AktivitasdriverPage implements OnInit {
   this.getRiwayat(); // method yang isinya ambil ulang dari API
 }
 
-getRiwayat() {
+ getRiwayat() {
   const userId = localStorage.getItem('user_id');
   if (userId) {
     this.historyService.riwayat(userId, 'driver', this.selectedFilter).subscribe({
       next: (res) => {
-        this.riwayatLayanan = res.riwayat || [];
+        const allOrders = res.riwayat || [];
+
+        let filteredOrders = allOrders;
+
+        const today = new Date();
+        const yesterday = new Date();
+        yesterday.setDate(today.getDate() - 1);
+
+        if (this.selectedFilter === 'hariini') {
+          filteredOrders = allOrders.filter((order: any) => {
+            const tgl = new Date(order.tanggal);
+            return tgl.getDate() === today.getDate() &&
+                   tgl.getMonth() === today.getMonth() &&
+                   tgl.getFullYear() === today.getFullYear();
+          });
+        } else if (this.selectedFilter === 'kemarin') {
+          filteredOrders = allOrders.filter((order: any) => {
+            const tgl = new Date(order.tanggal);
+            return tgl.getDate() === yesterday.getDate() &&
+                   tgl.getMonth() === yesterday.getMonth() &&
+                   tgl.getFullYear() === yesterday.getFullYear();
+          });
+        } else if (this.selectedFilter === 'minggu') {
+          const startOfWeek = new Date(today);
+          startOfWeek.setDate(today.getDate() - today.getDay()); // mulai minggu (minggu = 0)
+
+          filteredOrders = allOrders.filter((order: any) => {
+            const tgl = new Date(order.tanggal);
+            return tgl >= startOfWeek && tgl <= today;
+          });
+        }
+
+        this.riwayatLayanan = filteredOrders;
+
+        // Update ringkasan
+        this.jumlahOrderMasuk = filteredOrders.length;
+        this.jumlahOrderSelesai = filteredOrders.filter((o: any) => o.status.toLowerCase() === 'selesai').length;
       },
       error: (err) => {
         console.error('Gagal ambil data:', err);

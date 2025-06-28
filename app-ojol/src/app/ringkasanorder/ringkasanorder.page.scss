@@ -102,18 +102,61 @@
   }
 
   .payment-section {
-    margin-top: 20px;
+     margin-top: 16px;
 
     .payment-title {
       font-size: 18px;
       font-weight: 600;
       margin-bottom: 12px;
       text-align: center;
-      margin-top: 40px;
+       margin-top: 0;
       // Tidak ada garis bawah
       border-bottom: none;
+      
     }
   }
+
+ .qris-section {
+  margin-top: 8px;
+  padding: 0 16px;
+  text-align: center;
+
+  .payment-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 12px;
+    margin-top: 0;
+    text-align: center; // pastikan tetap di tengah
+  }
+
+  .qris-img {
+    display: block;
+    margin: 10px auto 0 auto; // QR-nya lebih naik dan center
+    width: 200px;
+    height: 200px;
+    object-fit: contain;
+  }
+
+  .qris-note {
+    margin-top: 8px;
+    text-align: center;
+    font-size: 13px;
+    line-height: 1.4;
+  }
+
+  .qris-loading-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 220px; // atau tinggi yang kamu mau
+  }
+
+}
+
+
+  .info-row:last-child {
+  margin-bottom: 10px; // biar gak terlalu nempel
+}
 
   .home-button {
     margin: 20px 16px;

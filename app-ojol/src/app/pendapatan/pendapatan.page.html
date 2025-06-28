@@ -10,8 +10,9 @@
   <!-- Penghasilan Hari Ini -->
   <div class="card-box">
     <h4>Penghasilan {{ selectedFilter }}</h4>
-    <h2 class="nominal">RP300.000</h2>
+    <h2 class="nominal">Rp{{ totalPenghasilan | number:'1.0-0' }}</h2>  
   </div>
+
 
   <!-- Rincian Order -->
   <div class="order-section">
@@ -22,6 +23,10 @@
       </ion-button>
     </div>
 
+  <div *ngIf="filteredOrders.length === 0" class="kosong">
+      <p>Tidak ada data order untuk {{ selectedFilter.toLowerCase() }}.</p>
+  </div>
+  
     <div class="order-card" *ngFor="let order of filteredOrders">
   <ion-card>
     <ion-card-content>
@@ -29,7 +34,7 @@
         <div class="detail">
           <div class="nama-waktu">
             <p class="nama-pengguna">{{ order.nama }}</p>
-            <span class="waktu">{{ order.waktu }}</span>
+            <span class="waktu">{{ order.tanggal | date:'dd MMM yyyy HH:mm' }}</span>
           </div>
 
           <div class="lokasi">

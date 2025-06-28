@@ -1,36 +1,32 @@
 <ion-header>
-  <ion-toolbar class="custom-header">
+  <ion-toolbar class="chat-header">
     <ion-buttons slot="start">
-      <ion-button (click)="goBack()">
-        <ion-icon slot="icon-only" name="arrow-back-outline"></ion-icon>
+      <ion-button (click)="goBack()" color="light">
+        <ion-icon name="arrow-back-outline" slot="icon-only"></ion-icon>
       </ion-button>
     </ion-buttons>
-    <ion-title>Chat dengan Driver</ion-title>
+    <ion-title>{{ pageTitle }}</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="chat-content" scrollEvents="true">
+
+<ion-content>
   <div class="chat-container">
-    <div *ngFor="let msg of chatMessages" [ngClass]="{'msg-user': msg.sender === 'user', 'msg-driver': msg.sender === 'driver'}" class="chat-bubble">
-      <div class="text">{{ msg.text }}</div>
-      <div class="timestamp">{{ msg.timestamp | date:'shortTime' }}</div>
+    <div class="chat-messages">
+      <div *ngFor="let msg of messages"
+           class="message"
+           [ngClass]="msg.sender === role ? 'sent' : 'received'">
+        {{ msg.message }}
+      </div>
     </div>
   </div>
 </ion-content>
 
-<ion-footer>
-  <ion-toolbar>
-    <ion-item lines="none">
-      <ion-input
-        [(ngModel)]="messageInput"
-        placeholder="Ketik pesan..."
-        type="text"
-        required
-        class="chat-input"
-      ></ion-input>
-      <ion-button fill="clear" slot="end" (click)="kirimPesan()" [disabled]="!messageInput">
-        <ion-icon name="send" slot="icon-only"></ion-icon>
-      </ion-button>
-    </ion-item>
-  </ion-toolbar>
+<ion-footer class="chat-input">
+  <ion-item lines="none">
+    <ion-input [(ngModel)]="newMessage" placeholder="Ketik pesan..."></ion-input>
+    <ion-button fill="clear" slot="end" (click)="sendMessage()">
+      <ion-icon name="send"></ion-icon>
+    </ion-button>
+  </ion-item>
 </ion-footer>

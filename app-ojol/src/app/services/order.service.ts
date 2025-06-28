@@ -67,5 +67,16 @@ export class OrderService {
     headers: this.getHeaders()
   });
 }
+
+  getQrisUrl(orderId: number): Observable<{ qris_url: string }> {
+  return this.http.post<{ qris_url: string }>(
+    `${environment.apiUrl}/midtrans/qris-url`,
+    { order_id: orderId },
+    { headers: this.getHeaders() }
+  );
+}
+
+
+
  
 }

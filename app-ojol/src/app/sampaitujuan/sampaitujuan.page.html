@@ -8,12 +8,12 @@
     <div class="driver-info">
       <div
         class="avatar"
-        [ngStyle]="{ 'background-image': 'url(' + photo + ')' }">
+        [ngStyle]="{ 'background-image': 'url(' + foto + ')' }">
       </div>
       <div class="details">
         <strong>{{ nama }}</strong>
         <div class="rating">
-          ⭐ {{ rating }} &nbsp;·&nbsp; {{ merk }} - {{ warna }}<br />
+           &nbsp;·&nbsp; {{ merk }} - {{ warna }}<br />
           {{ plat }}
         </div>
       </div>
@@ -39,7 +39,7 @@
       <div class="row-2">
         <div class="info-box">
           <div class="label">Waktu Tempuh</div>
-          <div><ion-icon name="time-outline"></ion-icon> {{ waktuSelesai }}</div>
+          <div><ion-icon name="time-outline"></ion-icon> {{ waktuTempuh }}</div>
         </div>
         <div class="info-box">
           <div class="label">Jarak Tempuh</div>
@@ -71,7 +71,7 @@
       </div>
     </div>
 
-    <ion-button expand="block" class="btn-selesai" (click)="goBack()">Selesai</ion-button>
+    <ion-button expand="block" class="btn-selesai" (click)="goToBeranda()">Selesai</ion-button>
   </div>
 
   <div class="footer-box"></div>

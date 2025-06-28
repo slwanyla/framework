@@ -29,16 +29,47 @@ class FCMTokenController extends Controller
         return response()->json(['message' => 'Token disimpan']);
     }
 
-   
+    public static function kirimFcm($userId, $title, $body, $data = [])
+    {
+        $tokens = FcmToken::where('user_id', $userId)->pluck('token');
 
-// public function simpanFcmToken(Request $request)
-//{
-   // $user = auth()->user();
-    //$user->fcm_token = $request->fcm_token;
-    //$user->save();
+        foreach ($tokens as $token) {
+            $payload = [
+                'to' => $token,
+                'notification' => [
+                    'title' => $title,
+                    'body' => $body,
+                ],
+                'data' => $data,
+            ];
 
-    // return response()->json(['message' => 'FCM token disimpan']);
-// }
+            $response = Http::withHeaders([
+                'Authorization' => 'key=' . env('FCM_SERVER_KEY'),
+                'Content-Type' => 'application/json',
+            ])->post('https://fcm.googleapis.com/fcm/send', $payload);
+
+            \Log::info('🔔 Kirim FCM ke user ID ' . $userId, [
+                'token' => $token,
+                'response' => $response->json(),
+                'payload' => $payload
+            ]);
+        }
+    }
+
+   public function simpanToken(Request $request)
+{
+    $request->validate([
+        'token' => 'required|string'
+    ]);
+
+    FcmToken::updateOrCreate(
+        ['user_id' => auth()->id()],
+        ['token' => $request->token]
+    );
+
+    return response()->json(['message' => 'Token FCM berhasil disimpan']);
+}
+
 
 
 }

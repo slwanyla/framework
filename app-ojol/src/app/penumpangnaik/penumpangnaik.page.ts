@@ -218,6 +218,7 @@ export class PenumpangnaikPage implements OnInit {
   }
 
   customerNaik() {
+    console.log('➡️ Kirim update status ke backend:', this.orderId, 'selesai');
     this.kirimStatus('selesai');
     this.updateStatus('selesai');
     this.router.navigate(['/ringkasanorder'], {

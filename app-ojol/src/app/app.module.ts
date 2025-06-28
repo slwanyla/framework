@@ -7,13 +7,21 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
-import { FirebaseX } from '@ionic-native/firebase-x/ngx';
+
+import { FCM } from '@awesome-cordova-plugins/fcm/ngx'; 
 
 @NgModule({
   declarations: [AppComponent],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule, HttpClientModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy },FirebaseX],
+  imports: [
+    BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    HttpClientModule
+  ],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
+    FCM, // hanya ini yang perlu
+  ],
   bootstrap: [AppComponent],
 })
-
 export class AppModule {}

@@ -12,8 +12,6 @@
       <div class="name-status" (click)="goToProfilDriver()">
         <h2>{{profile.name}}</h2>
         <p class="plate">{{profile.merek}}–{{profile.no_plat}}</p>
-        <ion-icon name="star" color="light"></ion-icon>
-        <span>4.9 (120 penilaian)</span>
       </div>
       <ion-toggle slot="end" checked (ionChange)="toggleAktif($event)"></ion-toggle>
     </div>
@@ -40,29 +38,40 @@
     <ion-button size="small" class="terima" (click)="terimaPermintaan()">Terima</ion-button>
   </div>
 </div>
-
-<div *ngIf="loadingLokasi && !lokasiBerhasil" class="lokasi-loading">
-  <ion-spinner name="dots"></ion-spinner>
-  <p>🔄 Mengambil lokasi...</p>
-</div>
-
-<div *ngIf="!loadingLokasi && !lokasiBerhasil" class="lokasi-error">
-  <ion-text color="danger">❌ Gagal mendapatkan lokasi</ion-text>
-  <ion-button expand="block" (click)="getCurrentLocation()">Coba Lagi</ion-button>
-</div>
-
-
-
   
 
   <div class="navigation-card">
+
+  <!-- ✅ Jika masih loading -->
+  <div *ngIf="loadingLokasi && !lokasiBerhasil">
+    <div class="nav-header">
+      <ion-icon name="location-outline"></ion-icon>
+      <p class="text">Mengambil Lokasi...</p>
+    </div>
+    <ion-spinner name="dots" style="margin-left: 55px;"></ion-spinner>
+    <p class="note">🔄 Lokasi sedang diproses oleh sistem</p>
+  </div>
+
+  <!-- ❌ Jika gagal -->
+  <div *ngIf="!loadingLokasi && !lokasiBerhasil">
+    <div class="nav-header">
+      <ion-icon name="warning-outline" color="danger"></ion-icon>
+      <p class="text" style="color: #d13438;">Gagal Ambil Lokasi</p>
+    </div>
+    <ion-button expand="block" fill="outline" (click)="getCurrentLocation()">Coba Lagi</ion-button>
+    <p class="note">Pastikan GPS aktif dan sinyal stabil</p>
+  </div>
+
+  <!-- ✅ Jika lokasi berhasil -->
+  <div *ngIf="lokasiBerhasil && !loadingLokasi">
     <div class="nav-header">
       <ion-icon name="location-outline"></ion-icon>
       <p class="text">Navigasi Aktif</p>
     </div>
-    <ion-button fill="outline" size="small" (click)="lihatRute()">Lihat Rute</ion-button>
     <p class="note">Update posisi terkirim otomatis ke sistem</p>
   </div>
+  </div>
+
 
   <div class="history-card" *ngIf="riwayatTerakhir" (click)="goToRiwayat()" style="cursor: pointer;">
   <div class="history-header">

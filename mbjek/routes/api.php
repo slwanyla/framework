@@ -15,6 +15,7 @@ use App\Http\Controllers\FCMTokenController;
 use App\Http\Controllers\MidtransCallbackController;
 use App\Http\Controllers\RouteController;
 use App\Http\Controllers\HistoryController;
+use App\Http\Controllers\ChatController;
 
 // ✨ Public routes
 Route::post('/register', [AuthController::class, 'register']);
@@ -41,7 +42,10 @@ Route::get('/proxy-search', function (Request $request) {
 });
 
 // ✨ Tracking order tanpa login (boleh public)
-
+// chat tanpa login
+// routes chat
+    Route::get('/chat/{orderId}', [ChatController::class, 'index']);
+    Route::post('/chat/send', [ChatController::class,'store']);
 
 // ✨ Routes yang butuh token login
 Route::middleware('auth:sanctum')->group(function () {
@@ -67,22 +71,21 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('/perjalanan/update-status', [OrderController::class, 'updatePerjalanan']);
     Route::get('/detail-order/{id}', [HistoryController::class, 'show']);
     
-
-
     
     Route::post('/proxy-ors', [RouteController::class, 'proxyToORS']);
 
-
+    //pendapatan
+    Route::get('/pendapatan/{driverId}', [DriverController::class, 'PendapatanDriver']);
 
     // Route di routes/api.php
-    Route::post('/midtrans-token', [Midtrans::class, 'getSnapToken']);
+    Route::post('/midtrans/qris-url', [Midtrans::class, 'getQrisUrl']);
     Route::post('/midtrans-notif', [MidtransController::class, 'handleNotification']);
 
 
     Route::post('/driver/update-location', [DriverController::class, 'updateLocation']);
     Route::post('/driver/update-status', [DriverController::class, 'updateStatus']);
 
-    Route::post('/save-fcm-token', [FCMTokenController::class, 'store']);
+     Route::post('/fcm-token', [FCMTokenController::class, 'store']);
     
 
     

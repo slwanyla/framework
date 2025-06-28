@@ -45,6 +45,7 @@ export class BerandaPage implements OnInit {
 
   async getCurrentLocation() {
     try {
+      console.log('🔍 Mengambil lokasi via Capacitor...');
       const position = await Geolocation.getCurrentPosition();
       this.latitude = position.coords.latitude;
       this.longitude = position.coords.longitude;

@@ -3,28 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Midtrans\Snap;
 use Midtrans\Config;
+use Midtrans\CoreApi;
 use App\Models\Order;
 use Illuminate\Support\Facades\Log;
 
 class Midtrans extends Controller
-
 {
-    public function getSnapToken(Request $request)
+    public function getQrisUrl(Request $request)
     {
-        \Log::info('🧪 Memanggil Midtrans Token API...'); 
-        Log::info('🔑 Snap Token Request Masuk', $request->all());
-
         $request->validate([
             'order_id' => 'required|exists:orders,id',
         ]);
 
-        $orderId = $request->input('order_id');
-
-        if (!$order) {
-            return response()->json(['error' => 'Order tidak ditemukan'], 404);
-        }
+        $order = Order::find($request->order_id);
+        $grossAmount = (int) $order->tarif;
 
         // Konfigurasi Midtrans
         Config::$serverKey = config('services.midtrans.server_key');
@@ -32,32 +25,31 @@ class Midtrans extends Controller
         Config::$isSanitized = true;
         Config::$is3ds = true;
 
-        $snapPayload = [
+        $params = [
+            'payment_type' => 'qris',
             'transaction_details' => [
-                'order_id' => 'MBJEK-' . $order->id,
-                'gross_amount' => (int) $request->input('total_harga'),
-            ],
-            'customer_details' => [
-                'first_name' => optional($order->customer)->nama ?? 'Customer',
-                'email' => optional($order->customer)->email ?? 'customer@mbjek.com',
-            ],
-            'enabled_payments' => ['qris']
+                'order_id' => 'MBJEK-' . $order->id . '-' . time(),
+                'gross_amount' => $grossAmount,
+            ]
         ];
 
         try {
-            $snapToken = Snap::getSnapToken($snapPayload);
+            $charge = CoreApi::charge($params);
 
-            // Simpan token di order (opsional)
-            $order->snap_token = $snapToken;
-            $order->save();
+            // Logging biar bisa dicek kalau error
+            Log::info('📦 Response dari Midtrans CoreApi::charge():', (array) $charge);
 
-            return response()->json(['token' => $snapToken]);
+            // Ambil qr_string dari hasil response
+            $qrisString = $charge->qr_string;
 
+            return response()->json(['qris_url' => $qrisString]);
         } catch (\Exception $e) {
-            Log::error('❌ Gagal ambil Snap Token: ' . $e->getMessage());
-            return response()->json(['error' => 'Midtrans Error', 'message' => $e->getMessage()], 500);
+            Log::error('Gagal membuat QRIS Midtrans: ' . $e->getMessage());
+            return response()->json(['error' => $e->getMessage()], 500);
         }
     }
+
+
 
     // MidtransController.php
     public function handleNotification(Request $request)

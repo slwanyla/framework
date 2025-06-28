@@ -31,6 +31,7 @@ export class JemputpenumpangPage implements OnInit {
   destinationLat: number = 0;
   destinationLng: number = 0;
   driverId: number = 0;
+  intervalId: any;
 
 
 
@@ -74,7 +75,7 @@ export class JemputpenumpangPage implements OnInit {
     console.log('🧾 Semua queryParams:', params);
     console.log('🚩 Received destinationLat from params:', params['destinationLat']);
     console.log('🚩 Received destinationLng from params:', params['destinationLng']);
-     console.log('params destination:', params['destinationLat'], params['destinationLng'])
+    console.log('params destination:', params['destinationLat'], params['destinationLng'])
 
   });
   
@@ -86,15 +87,26 @@ ngAfterViewInit() {
   }, 300);
 }
 
-ngOnDestroy() {
+  ngOnDestroy() {
+  this.ionViewDidLeave(); // biar semua bersih di satu tempat
+}
+
+
+  ionViewDidLeave() {
   if (this.lokasiInterval) {
     clearInterval(this.lokasiInterval);
-    this.lokasiInterval = null;
+    console.log('❎ Lokasi interval dimatikan di ionViewDidLeave');
+  }
+
+  if (this.intervalId) {
+    clearInterval(this.intervalId);
+    console.log('❎ Interval lain dimatikan di ionViewDidLeave');
   }
 
   if (this.map) {
     this.map.remove();
     this.map = null;
+    console.log('🗺️ Map dimatikan');
   }
 }
 
@@ -144,7 +156,9 @@ ngOnDestroy() {
     this.routeService.getRoute(driverLng, driverLat, this.pickupLng, this.pickupLat).subscribe({
       next: (res) => {
         const geojsonRoute = res.features?.[0];
-        if (this.routeLayer) this.map.removeLayer(this.routeLayer);
+        if (this.map && this.routeLayer) {
+            this.map.removeLayer(this.routeLayer);
+        }
         if (geojsonRoute) {
           this.routeLayer = L.geoJSON(geojsonRoute, {
             style: { color: '#2c7be5', weight: 5 }

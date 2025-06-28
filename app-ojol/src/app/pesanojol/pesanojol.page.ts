@@ -412,10 +412,6 @@ async showToast(
   await toast.present();
 }
 
-
-
-
-
   goBack() {
     this.router.navigate(['/beranda']);
   }

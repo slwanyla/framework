@@ -12,10 +12,6 @@
         <div class="driver-photo" [style.backgroundImage]="'url(' + (driver?.foto || 'assets/img/default-driver.png') + ')'"></div>
         <div class="driver-detail">
           <strong>{{ driver.nama }}</strong>
-          <div class="rating">
-            <ion-icon name="star" color="warning"></ion-icon>
-            <span>{{ driver.rating }}</span>
-          </div>
           <p>{{ driver.kendaraan_merk }} - {{ driver.kendaraan_warna }}<br>{{ driver.plat_nomor }}</p>
         </div>
       </div>
@@ -76,7 +72,6 @@
     </div>
 
     <div class="action-buttons">
-      <ion-button class="btn-cancel" expand="block" shape="round" (click)="batalKeBeranda()">Cancel</ion-button>
       <ion-button class="btn-done" expand="block" shape="round" (click)="lanjutkanKeSampaiTujuan()">Selesai</ion-button>
     </div>
   </div>
